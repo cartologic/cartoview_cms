@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^pages/', include(wagtail_urls)),
 
+    url(r'^new/', views.cms.new, name="cartoview_cms.new"),
+
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's serving mechanism
     url(r'', include(wagtail_urls)),

@@ -9,7 +9,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from django.db.models.signals import pre_delete
 
-from cartoview.app_manager.models import AppInstance
+from cartoview.app_manager.models import AppInstance, App
 
 
 class GeoPage(Page):
@@ -40,8 +40,9 @@ class GeoPage(Page):
     ]
 
     def save(self, *args, **kwargs):
+        app = App.objects.filter(name="cartoview_cms").first()
         if self.app_instance is None:
-            app_instance = AppInstance(title=self.title, config=self.title, owner=self.owner)
+            app_instance = AppInstance(title=self.title, config=self.title, owner=self.owner, app=app)
             app_instance.save()
             self.app_instance = app_instance
         else:
@@ -49,10 +50,12 @@ class GeoPage(Page):
             app_instance.title = self.title
             app_instance.config = self.title
             app_instance.owner = self.owner
+            app_instance.app = app
             app_instance.save()
         super(GeoPage, self).save()
 
 
 @receiver(pre_delete, sender=GeoPage)
 def delete_app(sender, instance, **kwargs):
-    instance.app_instance.delete()
+    if instance.app_instance is not None:
+        instance.app_instance.delete()

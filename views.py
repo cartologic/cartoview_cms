@@ -63,5 +63,10 @@ class CMS(StandardAppViews):
         return redirect('/apps/cartoview_cms/')
 
 
+    @method_decorator(login_required)
+    def new(self, request, template=None, context={}, *args, **kwargs):
+        return redirect('/apps/cartoview_cms/admin/pages/1/add_subpage/')
+
+
 APP_NAME = os.path.basename(os.path.dirname(__file__))
 cms = CMS(APP_NAME)
