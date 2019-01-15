@@ -1,4 +1,5 @@
 from django.db import models
+from django.dispatch import receiver
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
@@ -6,6 +7,7 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
+from django.db.models.signals import pre_delete
 
 from cartoview.app_manager.models import AppInstance
 
@@ -31,7 +33,7 @@ class GeoPage(Page):
         ('image', ImageChooserBlock()),
         ('embed', EmbedBlock()),
     ], blank=True)
-    app_instance = models.OneToOneField(AppInstance, on_delete=models.PROTECT, null=True, blank=True)
+    app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel("body", classname="Full"),
@@ -49,3 +51,8 @@ class GeoPage(Page):
             app_instance.owner = self.owner
             app_instance.save()
         super(GeoPage, self).save()
+
+
+@receiver(pre_delete, sender=GeoPage)
+def delete_app(sender, instance, **kwargs):
+    instance.app_instance.delete()
