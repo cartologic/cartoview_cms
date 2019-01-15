@@ -7,7 +7,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 
-class HomePage(Page):
+class GeoPage(Page):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('email_field', blocks.EmailBlock()),
