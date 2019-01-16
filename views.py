@@ -71,8 +71,12 @@ class CMS(StandardAppViews):
     def view(self, request, instanceid):
         temp_app_instance = AppInstance.objects.get(id=instanceid)
         result = GeoPage.objects.get(app_instance=temp_app_instance)
-        print(result.url)
         return redirect(result.url)
+
+    def edit(self, request, instanceid):
+        temp_app_instance = AppInstance.objects.get(id=instanceid)
+        result = GeoPage.objects.get(app_instance=temp_app_instance)
+        return redirect("/apps/cartoview_cms/admin/pages/%s/edit/" % result.id)
 
 APP_NAME = os.path.basename(os.path.dirname(__file__))
 cms = CMS(APP_NAME)
