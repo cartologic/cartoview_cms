@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^pages/', include(wagtail_urls)),
 
     url(r'^new/', views.cms.new, name="cartoview_cms.new"),
-
     url(r'^(?P<instanceid>[^/]*)/view/$', views.cms.view, name='cartoview_cms.view'),
     url(r'^(?P<instanceid>[^/]*)/edit/$', views.cms.edit, name='cartoview_cms.edit'),
 

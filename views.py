@@ -15,7 +15,7 @@ class CMS(StandardAppViews):
 
     @method_decorator(login_required)
     def new(self, request, template=None, context={}, *args, **kwargs):
-        return redirect('/apps/cartoview_cms/admin/pages/1/add_subpage/')
+        return redirect('/apps/cartoview_cms/admin/pages/2/add_subpage/')
 
     def view(self, request, instanceid):
         temp_app_instance = AppInstance.objects.get(id=instanceid)
