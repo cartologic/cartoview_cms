@@ -1,3 +1,14 @@
 {% load wagtailcore_tags %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
 
 {{ page.body }}
+
+<div class="row">
+    <div class="col-lg-11">
+        <hr/>
+        {% get_map_detail %}
+        <div id="the_map"></div>
+    </div>
+</div>

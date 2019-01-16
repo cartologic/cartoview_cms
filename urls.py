@@ -12,6 +12,9 @@ urlpatterns = [
 
     url(r'^new/', views.cms.new, name="cartoview_cms.new"),
 
+    url(r'^(?P<instanceid>[^/]*)/view/$', views.cms.view, name='cartoview_cms.view'),
+    url(r'^(?P<instanceid>[^/]*)/edit/$', views.cms.edit, name='cartoview_cms.edit'),
+
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's serving mechanism
     url(r'', include(wagtail_urls)),
