@@ -1,2 +1,2 @@
-# cartoview_cms
+# Cartoview CMS
 Content Management System for Cartoview
