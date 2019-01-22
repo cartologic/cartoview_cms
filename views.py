@@ -7,7 +7,7 @@ from cartoview.app_manager.models import AppInstance
 from cartoview.app_manager.views import StandardAppViews
 from geonode.base.models import TopicCategory
 
-from .models import GeoPage, SeaLevelRise
+from .models import SeaLevelRise
 
 
 class CMS(StandardAppViews):

@@ -12,6 +12,7 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from django.db.models.signals import pre_delete
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
+from geonode.base.models import TopicCategory
 from geonode.maps.models import Map, MapLayer
 from geonode.utils import resolve_object
 from cartoview.app_manager.models import AppInstance, App
@@ -19,7 +20,8 @@ from cartoview.app_manager.models import AppInstance, App
 from .snippets.MapSnippet import MapSnippet
 
 
-class GeoPage(Page):
+class BaseGeoPage(Page):
+    is_creatable = False
     abstract = models.CharField(max_length=120, blank=True, null=True)
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
@@ -47,7 +49,6 @@ class GeoPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("abstract", classname="full"),
@@ -55,41 +56,19 @@ class GeoPage(Page):
         SnippetChooserPanel('map'),
     ]
 
-    def save(self, *args, **kwargs):
-        app = App.objects.filter(name="cartoview_cms").first()
-        thumbnail_url = ""
-        if self.map is not None:
-            thumbnail_url = self.map.map_object.thumbnail_url
-        if self.app_instance is None:
-            app_instance = AppInstance(
-                title=self.title,
-                config=json.dumps({
-                    'title': self.title,
-                    'abstract': self.abstract
-                }),
-                owner=self.owner,
-                app=app,
-                thumbnail_url=thumbnail_url,
-                abstract=self.abstract
+    @staticmethod
+    def assure_category_exists(identifier, description, gn_description):
+        num_results = TopicCategory.objects.filter(identifier=identifier).count()
+        if num_results == 0:
+            temp_category = TopicCategory(
+                identifier=identifier,
+                description=description,
+                gn_description=gn_description
             )
-            app_instance.save()
-            self.app_instance = app_instance
-        else:
-            app_instance = self.app_instance
-            app_instance.title = self.title
-            app_instance.config = json.dumps({
-                'title': self.title,
-                'abstract': self.abstract
-            })
-            app_instance.owner = self.owner
-            app_instance.app = app
-            app_instance.thumbnail_url = thumbnail_url
-            app_instance.abstract = self.abstract
-            app_instance.save()
-        super(GeoPage, self).save()
+            temp_category.save()
 
     def get_context(self, request, *args, **kwargs):
-        context = super(GeoPage, self).get_context(request)
+        context = super(BaseGeoPage, self).get_context(request)
         id = self.map.map_object.id
         key = 'pk'
         map_obj = resolve_object(
@@ -110,7 +89,7 @@ class GeoPage(Page):
         return context
 
 
-@receiver(pre_delete, sender=GeoPage)
+@receiver(pre_delete, sender=BaseGeoPage)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
         instance.app_instance.delete()

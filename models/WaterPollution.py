@@ -9,18 +9,18 @@ from geonode.base.models import TopicCategory
 from .BaseGeoPage import BaseGeoPage
 
 
-class SeaLevelRise(BaseGeoPage):
+class WaterPollution(BaseGeoPage):
     is_creatable = True
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
-    category_identifier = "seaLevelRise"
-    category_description = "Base Category for all CMS Sea Level Rise Topics"
-    category_gn_description = "Sea Level Rise"
+    category_identifier = "waterPollution"
+    category_description = "Base Category for all CMS Water Pollution Topics"
+    category_gn_description = "Water Pollution"
 
     def __init__(self, *args, **kwargs):
-        super(SeaLevelRise, self).__init__(*args, **kwargs)
-        BaseGeoPage.assure_category_exists(SeaLevelRise.category_identifier, SeaLevelRise.category_description,
-                                           SeaLevelRise.category_gn_description)
+        super(WaterPollution, self).__init__(*args, **kwargs)
+        BaseGeoPage.assure_category_exists(WaterPollution.category_identifier, WaterPollution.category_description,
+                                           WaterPollution.category_gn_description)
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
@@ -57,13 +57,13 @@ class SeaLevelRise(BaseGeoPage):
             app_instance.abstract = self.abstract
             app_instance.category = category
             app_instance.save()
-        super(SeaLevelRise, self).save()
+        super(WaterPollution, self).save()
 
     class Meta:
-        verbose_name_plural = 'Sea Level Rise Topics'
+        verbose_name_plural = 'Water Pollution Topics'
 
 
-@receiver(pre_delete, sender=SeaLevelRise)
+@receiver(pre_delete, sender=WaterPollution)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
         instance.app_instance.delete()
