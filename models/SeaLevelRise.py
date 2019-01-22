@@ -12,6 +12,7 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from django.db.models.signals import pre_delete
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
+from geonode.base.models import TopicCategory
 from geonode.maps.models import Map, MapLayer
 from geonode.utils import resolve_object
 from cartoview.app_manager.models import AppInstance, App
@@ -19,7 +20,7 @@ from cartoview.app_manager.models import AppInstance, App
 from .snippets.MapSnippet import MapSnippet
 
 
-class GeoPage(Page):
+class SeaLevelRise(Page):
     abstract = models.CharField(max_length=120, blank=True, null=True)
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
@@ -55,8 +56,21 @@ class GeoPage(Page):
         SnippetChooserPanel('map'),
     ]
 
+    @staticmethod
+    def assure_category_exists():
+        num_results = TopicCategory.objects.filter(identifier="seaLevelRise").count()
+        if num_results == 0:
+            temp_category = TopicCategory(
+                identifier="seaLevelRise",
+                description="Base Category for all CMS Sea Level Rise Topics",
+                gn_description="Sea Level Rise"
+            )
+            temp_category.save()
+
     def save(self, *args, **kwargs):
+        SeaLevelRise.assure_category_exists()
         app = App.objects.filter(name="cartoview_cms").first()
+        category = TopicCategory.objects.filter(identifier="seaLevelRise").first()
         thumbnail_url = ""
         if self.map is not None:
             thumbnail_url = self.map.map_object.thumbnail_url
@@ -70,7 +84,8 @@ class GeoPage(Page):
                 owner=self.owner,
                 app=app,
                 thumbnail_url=thumbnail_url,
-                abstract=self.abstract
+                abstract=self.abstract,
+                category=category
             )
             app_instance.save()
             self.app_instance = app_instance
@@ -85,11 +100,12 @@ class GeoPage(Page):
             app_instance.app = app
             app_instance.thumbnail_url = thumbnail_url
             app_instance.abstract = self.abstract
+            app_instance.category = category
             app_instance.save()
-        super(GeoPage, self).save()
+        super(SeaLevelRise, self).save()
 
     def get_context(self, request, *args, **kwargs):
-        context = super(GeoPage, self).get_context(request)
+        context = super(SeaLevelRise, self).get_context(request)
         id = self.map.map_object.id
         key = 'pk'
         map_obj = resolve_object(
@@ -109,8 +125,11 @@ class GeoPage(Page):
         context['links'] = links
         return context
 
+    class Meta:
+        verbose_name_plural = 'Sea Level Rise Topics'
 
-@receiver(pre_delete, sender=GeoPage)
+
+@receiver(pre_delete, sender=SeaLevelRise)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
         instance.app_instance.delete()
