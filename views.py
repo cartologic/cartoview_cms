@@ -5,9 +5,8 @@ from django.utils.decorators import method_decorator
 
 from cartoview.app_manager.models import AppInstance
 from cartoview.app_manager.views import StandardAppViews
-from geonode.base.models import TopicCategory
 
-from .models import SeaLevelRise
+from .models import SeaLevelRise, WaterPollution
 
 
 class CMS(StandardAppViews):
@@ -24,6 +23,8 @@ class CMS(StandardAppViews):
         result = None
         if temp_category.identifier == "seaLevelRise":
             result = SeaLevelRise.objects.get(app_instance=temp_app_instance)
+        elif temp_category.identifier == "waterPollution":
+            result = WaterPollution.objects.get(app_instance=temp_app_instance)
         if result is not None:
             return redirect(result.url)
         else:
@@ -35,6 +36,8 @@ class CMS(StandardAppViews):
         result = None
         if temp_category.identifier == "seaLevelRise":
             result = SeaLevelRise.objects.get(app_instance=temp_app_instance)
+        elif temp_category.identifier == "waterPollution":
+            result = WaterPollution.objects.get(app_instance=temp_app_instance)
         if result is not None:
             return redirect("/apps/cartoview_cms/admin/pages/%s/edit/" % result.id)
         else:
