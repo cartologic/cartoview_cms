@@ -2,7 +2,7 @@ import json
 
 from django.db import models
 from django.dispatch import receiver
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
@@ -12,16 +12,19 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from django.db.models.signals import pre_delete
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
+from geonode.base.models import TopicCategory
 from geonode.maps.models import Map, MapLayer
 from geonode.utils import resolve_object
-from cartoview.app_manager.models import AppInstance, App
 
 from .snippets.MapSnippet import MapSnippet
 
 
-class GeoPage(Page):
+class BaseGeoPage(Page):
+    is_creatable = False
+    abstract = models.CharField(max_length=120, blank=True, null=True)
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock(classname="full")),
         ('email_field', blocks.EmailBlock()),
         ('integer', blocks.IntegerBlock()),
         ('float', blocks.FloatBlock()),
@@ -31,7 +34,6 @@ class GeoPage(Page):
         ('date', blocks.DateBlock()),
         ('time', blocks.TimeBlock()),
         ('date_time', blocks.DateTimeBlock()),
-        ('paragraph', blocks.RichTextBlock()),
         ('HTML', blocks.RawHTMLBlock()),
         ('quote', blocks.BlockQuoteBlock()),
         ('choice', blocks.ChoiceBlock()),
@@ -46,30 +48,26 @@ class GeoPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     content_panels = Page.content_panels + [
+        FieldPanel("abstract", classname="full"),
         StreamFieldPanel("body", classname="Full"),
         SnippetChooserPanel('map'),
     ]
 
-    def save(self, *args, **kwargs):
-        app = App.objects.filter(name="cartoview_cms").first()
-        if self.app_instance is None:
-            app_instance = AppInstance(title=self.title, config=self.title, owner=self.owner, app=app)
-            app_instance.save()
-            self.app_instance = app_instance
-        else:
-            app_instance = self.app_instance
-            app_instance.title = self.title
-            app_instance.config = self.title
-            app_instance.owner = self.owner
-            app_instance.app = app
-            app_instance.save()
-        super(GeoPage, self).save()
+    @staticmethod
+    def assure_category_exists(identifier, description, gn_description):
+        num_results = TopicCategory.objects.filter(identifier=identifier).count()
+        if num_results == 0:
+            temp_category = TopicCategory(
+                identifier=identifier,
+                description=description,
+                gn_description=gn_description
+            )
+            temp_category.save()
 
     def get_context(self, request, *args, **kwargs):
-        context = super(GeoPage, self).get_context(request)
+        context = super(BaseGeoPage, self).get_context(request)
         id = self.map.map_object.id
         key = 'pk'
         map_obj = resolve_object(
@@ -89,8 +87,8 @@ class GeoPage(Page):
         context['links'] = links
         return context
 
-
-@receiver(pre_delete, sender=GeoPage)
+@receiver(pre_delete, sender=BaseGeoPage)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
         instance.app_instance.delete()
+

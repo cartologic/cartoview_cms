@@ -1,2 +1,4 @@
 from .snippets.MapSnippet import MapSnippet
-from .GeoPage import GeoPage
+from .BaseGeoPage import BaseGeoPage
+from .SeaLevelRise import SeaLevelRise
+from .WaterPollution import WaterPollution

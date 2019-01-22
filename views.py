@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from cartoview.app_manager.models import AppInstance
 from cartoview.app_manager.views import StandardAppViews
 
-from .models import GeoPage
+from .models import SeaLevelRise, WaterPollution
 
 
 class CMS(StandardAppViews):
@@ -19,13 +19,29 @@ class CMS(StandardAppViews):
 
     def view(self, request, instanceid):
         temp_app_instance = AppInstance.objects.get(id=instanceid)
-        result = GeoPage.objects.get(app_instance=temp_app_instance)
-        return redirect(result.url)
+        temp_category = temp_app_instance.category
+        result = None
+        if temp_category.identifier == "seaLevelRise":
+            result = SeaLevelRise.objects.get(app_instance=temp_app_instance)
+        elif temp_category.identifier == "waterPollution":
+            result = WaterPollution.objects.get(app_instance=temp_app_instance)
+        if result is not None:
+            return redirect(result.url)
+        else:
+            return redirect("/")
 
     def edit(self, request, instanceid):
         temp_app_instance = AppInstance.objects.get(id=instanceid)
-        result = GeoPage.objects.get(app_instance=temp_app_instance)
-        return redirect("/apps/cartoview_cms/admin/pages/%s/edit/" % result.id)
+        temp_category = temp_app_instance.category
+        result = None
+        if temp_category.identifier == "seaLevelRise":
+            result = SeaLevelRise.objects.get(app_instance=temp_app_instance)
+        elif temp_category.identifier == "waterPollution":
+            result = WaterPollution.objects.get(app_instance=temp_app_instance)
+        if result is not None:
+            return redirect("/apps/cartoview_cms/admin/pages/%s/edit/" % result.id)
+        else:
+            return redirect("/")
 
 
 APP_NAME = os.path.basename(os.path.dirname(__file__))
