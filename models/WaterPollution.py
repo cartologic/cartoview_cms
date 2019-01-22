@@ -11,6 +11,7 @@ from .BaseGeoPage import BaseGeoPage
 
 class WaterPollution(BaseGeoPage):
     is_creatable = True
+    subpage_types = []
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
     category_identifier = "waterPollution"
