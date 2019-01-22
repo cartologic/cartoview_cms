@@ -87,8 +87,8 @@ class BaseGeoPage(Page):
         context['links'] = links
         return context
 
-
 @receiver(pre_delete, sender=BaseGeoPage)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
         instance.app_instance.delete()
+

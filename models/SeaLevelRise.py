@@ -63,7 +63,6 @@ class SeaLevelRise(BaseGeoPage):
     class Meta:
         verbose_name_plural = 'Sea Level Rise Topics'
 
-
 @receiver(pre_delete, sender=SeaLevelRise)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
