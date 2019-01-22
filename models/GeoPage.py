@@ -55,8 +55,11 @@ class GeoPage(Page):
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
+        thumbnail_url = ""
+        if self.map is not None:
+            thumbnail_url = self.map.map_object.thumbnail_url
         if self.app_instance is None:
-            app_instance = AppInstance(title=self.title, config=self.title, owner=self.owner, app=app)
+            app_instance = AppInstance(title=self.title, config=self.title, owner=self.owner, app=app, thumbnail_url=thumbnail_url)
             app_instance.save()
             self.app_instance = app_instance
         else:
@@ -65,6 +68,7 @@ class GeoPage(Page):
             app_instance.config = self.title
             app_instance.owner = self.owner
             app_instance.app = app
+            app_instance.thumbnail_url = thumbnail_url
             app_instance.save()
         super(GeoPage, self).save()
 
