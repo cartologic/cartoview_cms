@@ -15,7 +15,6 @@ from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from geonode.base.models import TopicCategory
 from geonode.maps.models import Map, MapLayer
 from geonode.utils import resolve_object
-from cartoview.app_manager.models import AppInstance, App
 
 from .snippets.MapSnippet import MapSnippet
 
