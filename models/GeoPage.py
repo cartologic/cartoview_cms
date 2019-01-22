@@ -22,6 +22,7 @@ from .snippets.MapSnippet import MapSnippet
 class GeoPage(Page):
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock(classname="full")),
         ('email_field', blocks.EmailBlock()),
         ('integer', blocks.IntegerBlock()),
         ('float', blocks.FloatBlock()),
@@ -31,7 +32,6 @@ class GeoPage(Page):
         ('date', blocks.DateBlock()),
         ('time', blocks.TimeBlock()),
         ('date_time', blocks.DateTimeBlock()),
-        ('paragraph', blocks.RichTextBlock()),
         ('HTML', blocks.RawHTMLBlock()),
         ('quote', blocks.BlockQuoteBlock()),
         ('choice', blocks.ChoiceBlock()),
