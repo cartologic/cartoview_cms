@@ -1,11 +1,9 @@
 import json
-
 from django.db import models
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 
 from cartoview.app_manager.models import App, AppInstance
 from geonode.base.models import TopicCategory
+
 from .BaseGeoPage import BaseGeoPage
 
 
@@ -62,8 +60,3 @@ class SeaLevelRise(BaseGeoPage):
 
     class Meta:
         verbose_name_plural = 'Sea Level Rise Topics'
-
-@receiver(pre_delete, sender=SeaLevelRise)
-def delete_app(sender, instance, **kwargs):
-    if instance.app_instance is not None:
-        instance.app_instance.delete()
