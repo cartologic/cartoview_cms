@@ -3,23 +3,22 @@ from django.db import models
 
 from cartoview.app_manager.models import App, AppInstance
 from geonode.base.models import TopicCategory
-
 from .BaseGeoPage import BaseGeoPage
 
 
-class SeaLevelRise(BaseGeoPage):
+class GroundWaterQuality(BaseGeoPage):
     is_creatable = True
     subpage_types = []
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
-    category_identifier = "seaLevelRise"
-    category_description = "Base Category for all CMS Sea Level Rise Topics"
-    category_gn_description = "Sea Level Rise"
+    category_identifier = "groundWaterQuality"
+    category_description = "Base Category for all CMS Ground Water Quality Topics"
+    category_gn_description = "Ground Water Quality"
 
     def __init__(self, *args, **kwargs):
-        super(SeaLevelRise, self).__init__(*args, **kwargs)
-        BaseGeoPage.assure_category_exists(SeaLevelRise.category_identifier, SeaLevelRise.category_description,
-                                           SeaLevelRise.category_gn_description)
+        super(GroundWaterQuality, self).__init__(*args, **kwargs)
+        BaseGeoPage.assure_category_exists(GroundWaterQuality.category_identifier, GroundWaterQuality.category_description,
+                                           GroundWaterQuality.category_gn_description)
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
@@ -56,7 +55,7 @@ class SeaLevelRise(BaseGeoPage):
             app_instance.abstract = self.abstract
             app_instance.category = category
             app_instance.save()
-        super(SeaLevelRise, self).save()
+        super(GroundWaterQuality, self).save()
 
     class Meta:
-        verbose_name_plural = 'Sea Level Rise Topics'
+        verbose_name_plural = 'Ground Water Quality Topics'

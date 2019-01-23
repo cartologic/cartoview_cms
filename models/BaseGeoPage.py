@@ -1,7 +1,6 @@
 import json
 
 from django.db import models
-from django.dispatch import receiver
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
@@ -9,7 +8,6 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
-from django.db.models.signals import pre_delete
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
 from geonode.base.models import TopicCategory
@@ -68,21 +66,22 @@ class BaseGeoPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(BaseGeoPage, self).get_context(request)
-        id = self.map.map_object.id
-        key = 'pk'
-        map_obj = resolve_object(
-            request, Map, {key: id},
-            permission='base.change_resourcebase',
-            permission_msg='You do not have permissions for this map.', **kwargs)
-        config = map_obj.viewer_json(request)
-        config = json.dumps(config)
-        layers = MapLayer.objects.filter(map=map_obj.id)
-        links = map_obj.link_set.download()
-        group = None
+        if self.map is not None:
+            id = self.map.map_object.id
+            key = 'pk'
+            map_obj = resolve_object(
+                request, Map, {key: id},
+                permission='base.change_resourcebase',
+                permission_msg='You do not have permissions for this map.', **kwargs)
+            config = map_obj.viewer_json(request)
+            config = json.dumps(config)
+            layers = MapLayer.objects.filter(map=map_obj.id)
+            links = map_obj.link_set.download()
+            group = None
 
-        context['config'] = config
-        context['resource'] = map_obj
-        context['group'] = group
-        context['layers'] = layers
-        context['links'] = links
+            context['config'] = config
+            context['resource'] = map_obj
+            context['group'] = group
+            context['layers'] = layers
+            context['links'] = links
         return context

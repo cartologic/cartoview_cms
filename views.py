@@ -6,25 +6,41 @@ from django.utils.decorators import method_decorator
 from cartoview.app_manager.models import AppInstance
 from cartoview.app_manager.views import StandardAppViews
 
-from .models import SeaLevelRise, WaterPollution
+from .models import SeaLevelRise, WaterPollution, CoastalCliffInstability, CoastalErosion, GroundWaterQuality, LandSubsidence, SeaWaterIntrusion
 
 
 class CMS(StandardAppViews):
     def __init__(self, app_name):
         super(StandardAppViews, self).__init__(app_name)
 
+    @staticmethod
+    def get_geopage_from_app_instance(category_identifier, app_instance):
+        result = None
+        if category_identifier == "seaLevelRise":
+            result = SeaLevelRise.objects.get(app_instance=app_instance)
+        elif category_identifier == "waterPollution":
+            result = WaterPollution.objects.get(app_instance=app_instance)
+        elif category_identifier == "coastalCliffInstability":
+            result = CoastalCliffInstability.objects.get(app_instance=app_instance)
+        elif category_identifier == "groundWaterQuality":
+            result = GroundWaterQuality.objects.get(app_instance=app_instance)
+        elif category_identifier == "landSubsidence":
+            result = LandSubsidence.objects.get(app_instance=app_instance)
+        elif category_identifier == "coastalErosion":
+            result = CoastalErosion.objects.get(app_instance=app_instance)
+        elif category_identifier == "seaWaterIntrusion":
+            result = SeaWaterIntrusion.objects.get(app_instance=app_instance)
+        return result
+
     @method_decorator(login_required)
     def new(self, request, template=None, context={}, *args, **kwargs):
         return redirect('/apps/cartoview_cms/admin/pages/2/add_subpage/')
 
-    def view(self, request, instanceid):
+    @staticmethod
+    def view(request, instanceid):
         temp_app_instance = AppInstance.objects.get(id=instanceid)
         temp_category = temp_app_instance.category
-        result = None
-        if temp_category.identifier == "seaLevelRise":
-            result = SeaLevelRise.objects.get(app_instance=temp_app_instance)
-        elif temp_category.identifier == "waterPollution":
-            result = WaterPollution.objects.get(app_instance=temp_app_instance)
+        result = CMS.get_geopage_from_app_instance(temp_category.identifier, temp_app_instance)
         if result is not None:
             return redirect(result.url)
         else:
@@ -33,11 +49,7 @@ class CMS(StandardAppViews):
     def edit(self, request, instanceid):
         temp_app_instance = AppInstance.objects.get(id=instanceid)
         temp_category = temp_app_instance.category
-        result = None
-        if temp_category.identifier == "seaLevelRise":
-            result = SeaLevelRise.objects.get(app_instance=temp_app_instance)
-        elif temp_category.identifier == "waterPollution":
-            result = WaterPollution.objects.get(app_instance=temp_app_instance)
+        result = CMS.get_geopage_from_app_instance(temp_category.identifier, temp_app_instance)
         if result is not None:
             return redirect("/apps/cartoview_cms/admin/pages/%s/edit/" % result.id)
         else:
