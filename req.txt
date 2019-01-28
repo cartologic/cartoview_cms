@@ -1,1 +1,2 @@
 wagtail==1.13.4
+beautifulsoup4==4.6.0
