@@ -3,7 +3,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 
 class ContentCategory(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     panels = [
         FieldPanel('name'),
