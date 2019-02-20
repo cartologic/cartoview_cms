@@ -8,7 +8,7 @@ from .BaseGeoPage import BaseGeoPage
 
 
 class SeaLevelRise(BaseGeoPage):
-    is_creatable = True
+    is_creatable = False
     subpage_types = []
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
