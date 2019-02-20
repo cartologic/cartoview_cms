@@ -36,19 +36,19 @@ class GeoPage(Page):
         ('image', ImageChooserBlock()),
         ('embed', EmbedBlock()),
     ], blank=True)
-    category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
+    content_category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('category', widget=forms.Select),
+        FieldPanel('content_category', widget=forms.Select),
         FieldPanel("abstract", classname="full"),
         StreamFieldPanel("body", classname="Full"),
     ]
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
-        GeoPage.assure_category_exists(self.category.name)
-        category = TopicCategory.objects.filter(identifier=self.category.name).first()
+        GeoPage.assure_category_exists(self.content_category.name)
+        category = TopicCategory.objects.filter(identifier=self.content_category.name).first()
         if self.app_instance is None:
             app_instance = AppInstance(
                 title=self.title,
