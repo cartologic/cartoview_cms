@@ -1,4 +1,6 @@
-from cartoview.app_manager.models import App
+import json
+
+from cartoview.app_manager.models import App, AppInstance
 from django.db import models
 from django import forms
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
@@ -35,6 +37,7 @@ class GeoPage(Page):
         ('embed', EmbedBlock()),
     ], blank=True)
     category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
+    app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('category', widget=forms.Select),
@@ -44,11 +47,8 @@ class GeoPage(Page):
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
-        category = TopicCategory.objects.filter(identifier=self.category_identifier).first()
-        thumbnail_url = ""
-        self.category = category
-        if self.map is not None:
-            thumbnail_url = self.map.map_object.thumbnail_url
+        GeoPage.assure_category_exists(self.category.name)
+        category = TopicCategory.objects.filter(identifier=self.category.name).first()
         if self.app_instance is None:
             app_instance = AppInstance(
                 title=self.title,
@@ -58,7 +58,6 @@ class GeoPage(Page):
                 }),
                 owner=self.owner,
                 app=app,
-                thumbnail_url=thumbnail_url,
                 abstract=self.abstract,
                 category=category
             )
@@ -73,14 +72,16 @@ class GeoPage(Page):
             })
             app_instance.owner = self.owner
             app_instance.app = app
-            app_instance.thumbnail_url = thumbnail_url
             app_instance.abstract = self.abstract
             app_instance.category = category
             app_instance.save()
-        super(CoastalCliffInstability, self).save()
+        super(GeoPage, self).save()
 
     @staticmethod
-    def assure_category_exists(identifier, description, gn_description):
+    def assure_category_exists(category_name):
+        identifier = category_name
+        description = category_name
+        gn_description = category_name
         num_results = TopicCategory.objects.filter(identifier=identifier).count()
         if num_results == 0:
             temp_category = TopicCategory(

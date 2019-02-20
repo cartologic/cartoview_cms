@@ -9,6 +9,8 @@ from .CoastalErosion import CoastalErosion
 from .LandSubsidence import LandSubsidence
 from .GroundWaterQuality import GroundWaterQuality
 
+from .GeoPage import GeoPage
+
 
 @receiver(pre_delete, sender=SeaLevelRise)
 def delete_app(sender, instance, **kwargs):
@@ -47,6 +49,12 @@ def delete_app(sender, instance, **kwargs):
 
 
 @receiver(pre_delete, sender=GroundWaterQuality)
+def delete_app(sender, instance, **kwargs):
+    if instance.app_instance is not None:
+        instance.app_instance.delete()
+
+
+@receiver(pre_delete, sender=GeoPage)
 def delete_app(sender, instance, **kwargs):
     if instance.app_instance is not None:
         instance.app_instance.delete()
