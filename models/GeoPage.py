@@ -38,6 +38,7 @@ class GeoPage(Page):
         ('embed', EmbedBlock()),
     ], blank=True)
     content_category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
+    category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     content_panels = Page.content_panels + [
@@ -50,6 +51,7 @@ class GeoPage(Page):
         app = App.objects.filter(name="cartoview_cms").first()
         GeoPage.assure_category_exists(self.content_category.name)
         category = TopicCategory.objects.filter(identifier=self.content_category.name).first()
+        self.category = category
         if self.app_instance is None:
             app_instance = AppInstance(
                 title=self.title,
