@@ -10,7 +10,7 @@ except(IOError, ImportError):
 setup(
     name='cartoview_cms',
     packages=find_packages(),
-    version='1.6.0',
+    version='1.7.0',
     description='Content Management System for Cartoview',
     long_description=long_description,
     author='Cartologic',
