@@ -16,6 +16,7 @@ from geonode.base.models import TopicCategory
 
 class GeoPage(Page):
     subpage_types = []
+    show_in_menus_default = True
     abstract = models.CharField(max_length=120, blank=True, null=True)
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
