@@ -10,5 +10,7 @@ from .GroundWaterQuality import GroundWaterQuality
 
 from .ContentCategory import ContentCategory
 from .GeoPage import GeoPage
+from .MenuItem import MenuItem
+from .MenuLink import MenuLink
 
 from .signals import *

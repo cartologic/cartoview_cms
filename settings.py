@@ -18,6 +18,12 @@ INSTALLED_APPS += (
     'wagtail.contrib.modeladmin',
 
     'modelcluster',
+
+    'wagtailmenus',
 )
+
+CARTOVIEW_CMS_CONTEXT_PROCESSORS = ('wagtailmenus.context_processors.wagtailmenus',)
+
+TEMPLATES[0]["OPTIONS"]['context_processors'] += CARTOVIEW_CMS_CONTEXT_PROCESSORS
 
 WAGTAIL_SITE_NAME = 'CMS'
