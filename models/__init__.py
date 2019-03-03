@@ -18,5 +18,6 @@ from .blog.BlogPostTag import BlogPostTag
 from .blog.BlogPost import BlogPost
 from .blog.BlogPostGalleryImage import BlogPostGalleryImage
 from .blog.BlogTagIndex import BlogTagIndex
+from .blog.BlogCategoryIndex import BlogCategoryIndex
 
 from .signals import *

@@ -1,5 +1,7 @@
+from django import forms
 from django.db import models
 from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalManyToManyField
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
@@ -16,6 +18,7 @@ class BlogPost(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
+    categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
     def main_image(self):
         gallery_item = self.gallery_images.first()
@@ -33,6 +36,7 @@ class BlogPost(Page):
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('tags'),
+            FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Blog information"),
         FieldPanel('intro'),
         FieldPanel('body', classname="full"),
