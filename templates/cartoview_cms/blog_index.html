@@ -1,0 +1,31 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <div class="page-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+
+    <div class="intro">{{ page.intro|richtext }}</div>
+
+    {% for post in page.get_children %}
+    {% with post=post.specific %}
+        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+        <p>{{ post.intro }}</p>
+        {{ post.body|richtext }}
+    {% endwith %}
+{% endfor %}
+
+{% endblock %}
+
+
+
+
+
+

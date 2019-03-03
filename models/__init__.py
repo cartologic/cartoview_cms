@@ -13,4 +13,7 @@ from .GeoPage import GeoPage
 from .MenuItem import MenuItem
 from .MenuLink import MenuLink
 
+from .blog.BlogIndex import BlogIndex
+from .blog.BlogPost import BlogPost
+
 from .signals import *
