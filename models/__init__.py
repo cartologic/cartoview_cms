@@ -15,5 +15,6 @@ from .MenuLink import MenuLink
 
 from .blog.BlogIndex import BlogIndex
 from .blog.BlogPost import BlogPost
+from .blog.BlogPostGalleryImage import BlogPostGalleryImage
 
 from .signals import *
