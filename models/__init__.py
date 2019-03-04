@@ -27,4 +27,6 @@ from .news.NewsItemGalleryImage import NewsItemGalleryImage
 from .news.NewsTagIndex import NewsTagIndex
 from .news.NewsCategoryIndex import NewsCategoryIndex
 
+from .StaticPage import StaticPage
+
 from .signals import *
