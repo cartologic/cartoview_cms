@@ -1,5 +1,5 @@
 import os
-__version__ = "1.7.3"
+__version__ = "1.7.4"
 APP_NAME = os.path.basename(os.path.dirname(__file__))
 
 urls_dict = {
