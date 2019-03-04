@@ -5,6 +5,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 class BlogIndex(Page):
     template = 'cartoview_cms/blog/blog_index.html'
+    parent_page_types = ['wagtailcore.Page']
     subpage_types = ['cartoview_cms.BlogPost']
     intro = RichTextField(blank=True)
 
