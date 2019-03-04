@@ -19,3 +19,9 @@ class BlogIndex(Page):
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full")
     ]
+
+    # Make sure that only one instance of the blog index is created ever!
+    @classmethod
+    def can_create_at(cls, parent):
+        return super(BlogIndex, cls).can_create_at(parent) \
+               and not cls.objects.exists()
