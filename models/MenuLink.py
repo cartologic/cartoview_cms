@@ -5,6 +5,7 @@ from wagtail.wagtailcore.models import Page
 
 
 class MenuLink(Page):
+    subpage_types = []
     show_in_menus_default = True
     link_external = models.URLField("External link", blank=True)
     content_panels = Page.content_panels + [
