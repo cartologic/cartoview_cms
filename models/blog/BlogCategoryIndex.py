@@ -3,6 +3,7 @@ from .BlogPost import BlogPost
 
 
 class BlogCategoryIndex(Page):
+    template = 'cartoview_cms/blog/blog_category_index.html'
     subpage_types = []
 
     def get_context(self, request):

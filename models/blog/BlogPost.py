@@ -12,6 +12,7 @@ from .BlogPostTag import BlogPostTag
 
 
 class BlogPost(Page):
+    template = 'cartoview_cms/blog/blog_post.html'
     parent_page_types = ['cartoview_cms.BlogIndex', 'cartoview_cms.BlogPost']
     subpage_types = ['cartoview_cms.BlogPost']
     date = models.DateField("Post date")
