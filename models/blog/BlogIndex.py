@@ -20,7 +20,7 @@ class BlogIndex(Page):
         FieldPanel('intro', classname="full")
     ]
 
-    # Make sure that only one instance of the blog index is created ever!
+    # Make sure that only one instance is created ever!
     @classmethod
     def can_create_at(cls, parent):
         return super(BlogIndex, cls).can_create_at(parent) \
