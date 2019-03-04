@@ -12,6 +12,7 @@ from .NewsItemTag import NewsItemTag
 
 
 class NewsItem(Page):
+    template = 'cartoview_cms/news/news_item.html'
     parent_page_types = ['cartoview_cms.NewsIndex', 'cartoview_cms.NewsItem']
     subpage_types = ['cartoview_cms.NewsItem']
     date = models.DateField("Post date")

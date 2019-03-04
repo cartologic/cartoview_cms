@@ -3,6 +3,7 @@ from .NewsItem import NewsItem
 
 
 class NewsTagIndex(Page):
+    template = 'cartoview_cms/news/news_tag_index.html'
     subpage_types = []
 
     def get_context(self, request):

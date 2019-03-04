@@ -4,6 +4,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 
 class NewsIndex(Page):
+    template = 'cartoview_cms/news/news_index.html'
     subpage_types = ['cartoview_cms.NewsItem']
     intro = RichTextField(blank=True)
 

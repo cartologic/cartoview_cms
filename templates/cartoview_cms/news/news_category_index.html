@@ -1,0 +1,35 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    {% if request.GET.category|length %}
+        <h4>Showing news in category "{{ request.GET.category }}"</h4>
+    {% endif %}
+
+    {% for newsitem in newsitems %}
+
+          <p>
+              <strong><a href="{% pageurl newsitem %}">{{ newsitem.title }}</a></strong><br />
+              <small>Revised: {{ newsitem.latest_revision_created_at }}</small><br />
+              {% if newsitem.author %}
+                <p>By {{ newsitem.author.profile }}</p>
+              {% endif %}
+          </p>
+
+    {% empty %}
+        No pages found in that category.
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+
+
