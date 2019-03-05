@@ -28,5 +28,6 @@ from .news.NewsTagIndex import NewsTagIndex
 from .news.NewsCategoryIndex import NewsCategoryIndex
 
 from .StaticPage import StaticPage
+from .forms.FormPage import FormPage
 
 from .signals import *

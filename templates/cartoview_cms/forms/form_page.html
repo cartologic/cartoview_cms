@@ -1,0 +1,28 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <div class="page-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+
+    {{ page.intro|richtext }}
+    <form action="{% pageurl page %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+
+{% endblock %}
+
+
+
+
+
+
