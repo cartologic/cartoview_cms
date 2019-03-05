@@ -17,6 +17,12 @@ class BlogCategoryIndex(Page):
         context['blogposts'] = blogposts
         return context
 
+    def full_clean(self, *args, **kwargs):
+        # first call the built-in cleanups (including default slug generation)
+        super(BlogCategoryIndex, self).full_clean(*args, **kwargs)
+        # now force the slug to be always 'blog-directories'
+        self.slug = "blog-categories"
+
     # Make sure that only one instance is created ever!
     @classmethod
     def can_create_at(cls, parent):

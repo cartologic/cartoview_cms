@@ -17,6 +17,13 @@ class NewsTagIndex(Page):
         context['newsitems'] = newsitems
         return context
 
+    def full_clean(self, *args, **kwargs):
+        # first call the built-in cleanups (including default slug generation)
+        super(NewsTagIndex, self).full_clean(*args, **kwargs)
+        # now force the slug to be always 'blog-directories'
+        self.slug = "news-tags"
+
+
     # Make sure that only one instance is created ever!
     @classmethod
     def can_create_at(cls, parent):
