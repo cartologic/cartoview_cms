@@ -28,3 +28,6 @@ class FormPage(AbstractEmailForm):
             FieldPanel('subject'),
         ], "Email"),
     ]
+
+    class Meta:
+        verbose_name = "Form with Email"
