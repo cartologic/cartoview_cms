@@ -25,3 +25,6 @@ class BlogIndex(Page):
     def can_create_at(cls, parent):
         return super(BlogIndex, cls).can_create_at(parent) \
                and not cls.objects.exists()
+
+    class Meta:
+        verbose_name = "Blog"

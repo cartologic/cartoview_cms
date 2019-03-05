@@ -25,3 +25,6 @@ class NewsIndex(Page):
     def can_create_at(cls, parent):
         return super(NewsIndex, cls).can_create_at(parent) \
                and not cls.objects.exists()
+
+    class Meta:
+        verbose_name = "News"
