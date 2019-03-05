@@ -20,6 +20,7 @@ INSTALLED_APPS += (
     'modelcluster',
 
     'wagtailmenus',
+    'widget_tweaks',
 )
 
 CARTOVIEW_CMS_CONTEXT_PROCESSORS = ('wagtailmenus.context_processors.wagtailmenus',)
