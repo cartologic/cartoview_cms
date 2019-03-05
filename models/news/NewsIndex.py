@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
@@ -13,6 +14,16 @@ class NewsIndex(Page):
         # Update context to include only published posts, ordered by reverse-chron
         context = super(NewsIndex, self).get_context(request)
         newsitems = self.get_children().live().order_by('-first_published_at')
+        paginator = Paginator(newsitems, 6)  # Show 6 resources per page
+        page = request.GET.get('page')
+        try:
+            newsitems = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            newsitems = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            newsitems = paginator.page(paginator.num_pages)
         context['newsitems'] = newsitems
         return context
 
