@@ -1,5 +1,6 @@
 from django.db import models
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from geonode.base.models import TopicCategory
 
 
 class ContentCategory(models.Model):

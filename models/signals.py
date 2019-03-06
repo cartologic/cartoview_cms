@@ -73,4 +73,4 @@ def delete_app(sender, instance, **kwargs):
 @receiver(post_save, sender=ContentCategory)
 def delete_app(sender, instance, **kwargs):
     if instance.name is not None:
-        GeoPage.assure_category_exists(instance.name)
+        ContentCategory.assure_category_exists(instance.name)

@@ -1,0 +1,32 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <div class="page-header">
+        <h2>Showing items in group "{{ page.title }}"</h2>
+    </div>
+
+    {% for item in groupcontent %}
+
+          <p>
+              <strong><a href="{% pageurl item %}">{{ item.title }}</a></strong><br />
+              <small>Revised: {{ item.latest_revision_created_at }}</small><br />
+          </p>
+
+    {% empty %}
+        No items found in this group.
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+
+

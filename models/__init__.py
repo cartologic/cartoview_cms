@@ -8,6 +8,7 @@ from .CoastalErosion import CoastalErosion
 from .LandSubsidence import LandSubsidence
 from .GroundWaterQuality import GroundWaterQuality
 
+from .general.ContentGroup import ContentGroup
 from .general.ContentCategory import ContentCategory
 from .general.GeoPage import GeoPage
 from .menu.MenuItem import MenuItem
