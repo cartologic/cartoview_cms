@@ -38,4 +38,4 @@ class BlogIndex(Page):
                and not cls.objects.exists()
 
     class Meta:
-        verbose_name = "Blog"
+        verbose_name = "Blog Module"

@@ -38,4 +38,4 @@ class NewsIndex(Page):
                and not cls.objects.exists()
 
     class Meta:
-        verbose_name = "News"
+        verbose_name = "News Module"
