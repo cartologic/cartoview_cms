@@ -23,9 +23,26 @@
             {% endwith %}
 
             <p>{{ post.intro }}</p>
-            {{ post.body|richtext }}
         {% endwith %}
     {% endfor %}
+
+    <ul class="pagination">
+        {% if blogpages.has_previous %}
+            <li>
+                <a href="?page={{ blogpages.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+            </li>
+        {% endif %}
+        {% for page_num in blogpages.paginator.page_range %}
+            <li {% if page_num == blogpages.number %} class="active"{% endif %}>
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endfor %}
+        {% if blogpages.has_next %}
+            <li>
+                <a href="?page={{ blogpages.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+            </li>
+        {% endif %}
+    </ul>
 
 {% endblock %}
 

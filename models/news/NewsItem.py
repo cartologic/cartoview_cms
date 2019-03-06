@@ -8,17 +8,17 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.wagtailsearch import index
 
-from .BlogPostTag import BlogPostTag
+from .NewsItemTag import NewsItemTag
 
 
-class BlogPost(Page):
-    template = 'cartoview_cms/blog/blog_post.html'
-    parent_page_types = ['cartoview_cms.BlogIndex', 'cartoview_cms.BlogPost']
-    subpage_types = ['cartoview_cms.BlogPost']
+class NewsItem(Page):
+    template = 'cartoview_cms/news/news_item.html'
+    parent_page_types = ['cartoview_cms.NewsIndex', 'cartoview_cms.NewsItem']
+    subpage_types = ['cartoview_cms.NewsItem']
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
-    tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
+    tags = ClusterTaggableManager(through=NewsItemTag, blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
     def main_image(self):
@@ -38,7 +38,7 @@ class BlogPost(Page):
             FieldPanel('date'),
             FieldPanel('tags'),
             FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
-        ], heading="Blog information"),
+        ], heading="News information"),
         FieldPanel('intro'),
         FieldPanel('body', classname="full"),
         InlinePanel('gallery_images', label="Gallery images"),

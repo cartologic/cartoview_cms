@@ -20,4 +20,14 @@ from .blog.BlogPostGalleryImage import BlogPostGalleryImage
 from .blog.BlogTagIndex import BlogTagIndex
 from .blog.BlogCategoryIndex import BlogCategoryIndex
 
+from .news.NewsIndex import NewsIndex
+from .news.NewsItemTag import NewsItemTag
+from .news.NewsItem import NewsItem
+from .news.NewsItemGalleryImage import NewsItemGalleryImage
+from .news.NewsTagIndex import NewsTagIndex
+from .news.NewsCategoryIndex import NewsCategoryIndex
+
+from .StaticPage import StaticPage
+from .forms.FormPage import FormPage
+
 from .signals import *
