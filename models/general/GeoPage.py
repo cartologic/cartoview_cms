@@ -12,6 +12,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from geonode.base.models import TopicCategory
+from .ContentCategory import ContentCategory
 
 
 class GeoPage(Page):
@@ -50,7 +51,7 @@ class GeoPage(Page):
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
-        GeoPage.assure_category_exists(self.content_category.name)
+        ContentCategory.assure_category_exists(self.content_category.name)
         category = TopicCategory.objects.filter(identifier=self.content_category.name).first()
         self.category = category
         if self.app_instance is None:
@@ -80,17 +81,3 @@ class GeoPage(Page):
             app_instance.category = category
             app_instance.save()
         super(GeoPage, self).save()
-
-    @staticmethod
-    def assure_category_exists(category_name):
-        identifier = category_name
-        description = category_name
-        gn_description = category_name
-        num_results = TopicCategory.objects.filter(identifier=identifier).count()
-        if num_results == 0:
-            temp_category = TopicCategory(
-                identifier=identifier,
-                description=description,
-                gn_description=gn_description
-            )
-            temp_category.save()

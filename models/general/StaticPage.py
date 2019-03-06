@@ -1,7 +1,7 @@
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from .blocks.fields import BodyStreamBlock
+from ..blocks.fields import BodyStreamBlock
 
 
 class StaticPage(Page):

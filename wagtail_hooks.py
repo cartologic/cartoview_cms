@@ -1,6 +1,6 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register)
-from .models.ContentCategory import ContentCategory
+from .models.general.ContentCategory import ContentCategory
 
 
 class ContentCategoryModelAdmin(ModelAdmin):

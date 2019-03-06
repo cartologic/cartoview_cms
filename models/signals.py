@@ -10,8 +10,8 @@ from .CoastalErosion import CoastalErosion
 from .LandSubsidence import LandSubsidence
 from .GroundWaterQuality import GroundWaterQuality
 
-from .ContentCategory import ContentCategory
-from .GeoPage import GeoPage
+from .general.ContentCategory import ContentCategory
+from .general.GeoPage import GeoPage
 
 
 @receiver(pre_delete, sender=SeaLevelRise)

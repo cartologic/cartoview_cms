@@ -8,10 +8,10 @@ from .CoastalErosion import CoastalErosion
 from .LandSubsidence import LandSubsidence
 from .GroundWaterQuality import GroundWaterQuality
 
-from .ContentCategory import ContentCategory
-from .GeoPage import GeoPage
-from .MenuItem import MenuItem
-from .MenuLink import MenuLink
+from .general.ContentCategory import ContentCategory
+from .general.GeoPage import GeoPage
+from .menu.MenuItem import MenuItem
+from .menu.MenuLink import MenuLink
 
 from .blog.BlogIndex import BlogIndex
 from .blog.BlogPostTag import BlogPostTag
@@ -27,7 +27,7 @@ from .news.NewsItemGalleryImage import NewsItemGalleryImage
 from .news.NewsTagIndex import NewsTagIndex
 from .news.NewsCategoryIndex import NewsCategoryIndex
 
-from .StaticPage import StaticPage
+from .general.StaticPage import StaticPage
 from .forms.FormPage import FormPage
 
 from .signals import *
