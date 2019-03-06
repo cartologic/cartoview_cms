@@ -9,7 +9,7 @@
 
 {% block body_outer %}
     <div class="page-header">
-        <h2>Showing items in group "{{ page.title }}"</h2>
+        <h2>{{ page.title }}</h2>
     </div>
 
     {% for item in groupcontent %}
@@ -22,6 +22,25 @@
     {% empty %}
         No items found in this group.
     {% endfor %}
+
+
+    <ul class="pagination">
+        {% if groupcontent.has_previous %}
+            <li>
+                <a href="?page={{ groupcontent.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+            </li>
+        {% endif %}
+        {% for page_num in groupcontent.paginator.page_range %}
+            <li {% if page_num == groupcontent.number %} class="active"{% endif %}>
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endfor %}
+        {% if groupcontent.has_next %}
+            <li>
+                <a href="?page={{ groupcontent.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+            </li>
+        {% endif %}
+    </ul>
 
 {% endblock %}
 

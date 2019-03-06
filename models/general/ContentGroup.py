@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import models
 from django import forms
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
@@ -20,11 +21,19 @@ class ContentGroup(Page):
     ]
 
     def get_context(self, request):
+        context = super(ContentGroup, self).get_context(request)
         # Filter by category title
         groupcontent = GeoPage.objects.filter(category__identifier=self.title)
-
-        # Update template context
-        context = super(ContentGroup, self).get_context(request)
+        paginator = Paginator(groupcontent, 6)  # Show 6 resources per page
+        page = request.GET.get('page')
+        try:
+            groupcontent = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            groupcontent = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            groupcontent = paginator.page(paginator.num_pages)
         context['groupcontent'] = groupcontent
         return context
 
