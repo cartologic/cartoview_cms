@@ -1,7 +1,6 @@
 import json
 
-from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
-
+from geonode.maps.models import Map
 from cartoview.app_manager.models import App, AppInstance
 from django.db import models
 from django import forms
@@ -14,6 +13,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from ..case_study.CaseStudy import CaseStudy
+from ..news.NewsItem import NewsItem
 from geonode.base.models import TopicCategory
 from .ContentCategory import ContentCategory
 
@@ -51,9 +51,12 @@ class GeoPage(Page):
 
     def get_context(self, request):
         context = super(GeoPage, self).get_context(request)
-        # Filter by category title
         case_studies = CaseStudy.objects.filter(categories=self.content_category)
+        news_items = NewsItem.objects.filter(categories=self.content_category)
+        maps = Map.objects.filter(category=self.category)
         context['case_studies'] = case_studies
+        context['news_items'] = news_items
+        context['maps'] = maps
         return context
 
     def save(self, *args, **kwargs):
