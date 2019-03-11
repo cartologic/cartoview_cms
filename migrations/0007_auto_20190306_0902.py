@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0040_page_draft_title'),
-        ('base', '0036_auto_20190227_1124'),
         ('cartoview_cms', '0006_auto_20190305_1224'),
     ]
 

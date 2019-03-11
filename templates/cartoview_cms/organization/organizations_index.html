@@ -1,6 +1,5 @@
 {% extends "geonode_base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load static from staticfiles %}
 {% load i18n %}
 {% load base_tags %}
 {% load client_lib_tags %}
@@ -9,13 +8,20 @@
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
 {% block body_outer %}
-
-
     <div class="page-header">
         <h2>{{ page.title }}</h2>
     </div>
 
-    {{ page.body }}
+    {% for organization in organizations %}
+
+          <p>
+              <strong><a href="{% pageurl organization %}">{{ organization.title }}</a></strong>
+          </p>
+
+    {% empty %}
+        No Organizations found.
+    {% endfor %}
+
 
 {% endblock %}
 

@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
         ('wagtailimages', '0019_delete_filter'),
         ('app_manager', '0010_auto_20181118_1333'),
         ('wagtailcore', '0040_page_draft_title'),
-        ('base', '0036_auto_20190227_1124'),
         ('cartoview_cms', '0011_geopagegalleryimage'),
     ]
 
