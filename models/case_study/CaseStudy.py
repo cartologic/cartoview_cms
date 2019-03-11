@@ -33,8 +33,6 @@ class CaseStudy(Page):
         ('embed', EmbedBlock()),
     ], blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
-    category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
-    app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     def gallery_image_count(self):
         return self.gallery_images.count()

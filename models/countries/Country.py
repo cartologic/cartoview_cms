@@ -1,4 +1,6 @@
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from django import forms
+from modelcluster.fields import ParentalManyToManyField
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
@@ -20,7 +22,9 @@ class Country(Page):
         ('image', ImageChooserBlock()),
         ('embed', EmbedBlock()),
     ], blank=True)
+    categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel("body", classname="Full"),
+        FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
     ]

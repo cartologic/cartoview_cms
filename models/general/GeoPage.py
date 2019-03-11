@@ -15,6 +15,7 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from ..case_study.CaseStudy import CaseStudy
 from ..news.NewsItem import NewsItem
+from ..countries.Country import Country
 from geonode.base.models import TopicCategory
 from .ContentCategory import ContentCategory
 
@@ -56,10 +57,12 @@ class GeoPage(Page):
         news_items = NewsItem.objects.filter(categories=self.content_category)
         maps = Map.objects.filter(category=self.category)
         documents = Document.objects.filter(category=self.category)
+        countries = Country.objects.filter(categories=self.content_category)
         context['case_studies'] = case_studies
         context['news_items'] = news_items
         context['maps'] = maps
         context['documents'] = documents
+        context['countries'] = countries
         return context
 
     def save(self, *args, **kwargs):
