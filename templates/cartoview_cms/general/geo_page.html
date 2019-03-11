@@ -36,113 +36,26 @@
     <hr/>
     {% endif %}
 
+{% with case_studies as case_studies %}
+    {% include 'cartoview_cms/general/geo_page_case_studies.html' %}
+{% endwith %}
 
-    {% if case_studies %}
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse1">Case Studies ({{ case_studies.count }})</a>
-                </h4>
-            </div>
-            <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        {% for case_study in case_studies%}
-                            <li><a href="{% pageurl case_study %}">{{ case_study.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
+{% with news_items as news_items %}
+    {% include 'cartoview_cms/general/geo_page_news.html' %}
+{% endwith %}
 
+{% with maps as maps %}
+    {% include 'cartoview_cms/general/geo_page_maps.html' %}
+{% endwith %}
 
-    {% if news_items %}
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse2">News & Events ({{ news_items.count }})</a>
-                </h4>
-            </div>
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        {% for news_item in news_items%}
-                            <li><a href="{% pageurl news_item %}">{{ news_item.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
+{% with documents as documents %}
+    {% include 'cartoview_cms/general/geo_page_documents.html' %}
+{% endwith %}
 
+{% with countries as countries %}
+    {% include 'cartoview_cms/general/geo_page_countries.html' %}
+{% endwith %}
 
-    {% if maps %}
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse3">Maps ({{ maps.count }})</a>
-                </h4>
-            </div>
-            <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        {% for map in maps%}
-                            <li><a href="{{ map.get_absolute_url }}">{{ map.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if documents %}
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse4">Documents ({{ documents.count }})</a>
-                </h4>
-            </div>
-            <div id="collapse4" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        {% for document in documents%}
-                            <li><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if countries %}
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse5">Countries ({{ countries.count }})</a>
-                </h4>
-            </div>
-            <div id="collapse5" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        {% for country in countries%}
-                            <li><a href="{% pageurl country %}">{{ country.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
 
 {% endblock %}

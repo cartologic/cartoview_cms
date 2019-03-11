@@ -1,0 +1,21 @@
+{% load wagtailcore_tags %}
+{% if news_items %}
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse2">News & Events ({{ news_items.count }})</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul>
+                        {% for news_item in news_items %}
+                            <li><a href="{% pageurl news_item %}">{{ news_item.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
