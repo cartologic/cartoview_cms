@@ -11,7 +11,7 @@ from .GeoPage import GeoPage
 
 class ContentGroup(Page):
     template = 'cartoview_cms/general/content_group.html'
-    subpage_types = ['cartoview_cms.GeoPage']
+    subpage_types = ['cartoview_cms.GeoPage', 'cartoview_cms.CaseStudy']
     show_in_menus_default = True
     content_category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)

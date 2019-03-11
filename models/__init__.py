@@ -29,6 +29,10 @@ from .news.NewsItemGalleryImage import NewsItemGalleryImage
 from .news.NewsTagIndex import NewsTagIndex
 from .news.NewsCategoryIndex import NewsCategoryIndex
 
+from .case_study.CaseStudyIndex import CaseStudyIndex
+from .case_study.CaseStudy import CaseStudy
+from .case_study.CaseStudyGalleryImage import CaseStudyGalleryImage
+
 from .general.StaticPage import StaticPage
 from .forms.FormPage import FormPage
 

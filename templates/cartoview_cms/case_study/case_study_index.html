@@ -1,0 +1,53 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <div class="page-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+
+    {% for casestudy in casestudies %}
+
+          <p>
+              <strong><a href="{% pageurl casestudy %}">{{ casestudy.title }}</a></strong><br />
+              <small>Revised: {{ casestudy.latest_revision_created_at }}</small><br />
+              {% if casestudy.author %}
+                <p>By {{ casestudy.author.profile }}</p>
+              {% endif %}
+          </p>
+
+    {% empty %}
+        No pages found in that category.
+    {% endfor %}
+
+    <ul class="pagination">
+        {% if casestudies.has_previous %}
+            <li>
+                <a href="?page={{ casestudies.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+            </li>
+        {% endif %}
+        {% for page_num in casestudies.paginator.page_range %}
+            <li {% if page_num == casestudies.number %} class="active"{% endif %}>
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endfor %}
+        {% if casestudies.has_next %}
+            <li>
+                <a href="?page={{ casestudies.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+            </li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
+
+
+
+
+
+
