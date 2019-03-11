@@ -1,6 +1,7 @@
 import json
 
 from geonode.maps.models import Map
+from geonode.documents.models import Document
 from cartoview.app_manager.models import App, AppInstance
 from django.db import models
 from django import forms
@@ -54,9 +55,11 @@ class GeoPage(Page):
         case_studies = CaseStudy.objects.filter(categories=self.content_category)
         news_items = NewsItem.objects.filter(categories=self.content_category)
         maps = Map.objects.filter(category=self.category)
+        documents = Document.objects.filter(category=self.category)
         context['case_studies'] = case_studies
         context['news_items'] = news_items
         context['maps'] = maps
+        context['documents'] = documents
         return context
 
     def save(self, *args, **kwargs):
