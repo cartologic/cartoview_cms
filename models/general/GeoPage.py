@@ -1,5 +1,7 @@
 import json
 
+from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
+
 from cartoview.app_manager.models import App, AppInstance
 from django.db import models
 from django import forms
@@ -11,6 +13,7 @@ from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
+from ..case_study.CaseStudy import CaseStudy
 from geonode.base.models import TopicCategory
 from .ContentCategory import ContentCategory
 
@@ -45,6 +48,13 @@ class GeoPage(Page):
         StreamFieldPanel("body", classname="Full"),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
+
+    def get_context(self, request):
+        context = super(GeoPage, self).get_context(request)
+        # Filter by category title
+        case_studies = CaseStudy.objects.filter(categories=self.content_category)
+        context['case_studies'] = case_studies
+        return context
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()

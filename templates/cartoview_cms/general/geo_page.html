@@ -36,25 +36,32 @@
     <hr/>
     {% endif %}
 
+
+    {% if case_studies %}
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse1">Case Studies(6)</a>
+                    <a data-toggle="collapse" href="#collapse1">Case Studies ({{ case_studies.count }})</a>
                 </h4>
             </div>
             <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                <div class="panel-body">
+                    <ul>
+                        {% for case_study in case_studies%}
+                            <li><a href="{% pageurl case_study %}">{{ case_study.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse2">Resources(17)</a>
+                    <a data-toggle="collapse" href="#collapse2">Resources (17)</a>
                 </h4>
             </div>
             <div id="collapse2" class="panel-collapse collapse">
@@ -68,7 +75,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse3">News & Events(10)</a>
+                    <a data-toggle="collapse" href="#collapse3">News & Events (10)</a>
                 </h4>
             </div>
             <div id="collapse3" class="panel-collapse collapse">
@@ -82,7 +89,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapse4">Countries(2)</a>
+                    <a data-toggle="collapse" href="#collapse4">Countries (2)</a>
                 </h4>
             </div>
             <div id="collapse4" class="panel-collapse collapse">
