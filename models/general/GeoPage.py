@@ -3,7 +3,7 @@ import json
 from cartoview.app_manager.models import App, AppInstance
 from django.db import models
 from django import forms
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
@@ -17,7 +17,7 @@ from .ContentCategory import ContentCategory
 
 class GeoPage(Page):
     template = 'cartoview_cms/general/geo_page.html'
-    parent_page_types = ['cartoview_cms.ContentGroup']
+    parent_page_types = ['cartoview_cms.ContentGroup', 'cartoview_cms.MenuItem']
     subpage_types = []
     show_in_menus_default = True
     abstract = models.CharField(max_length=120, blank=True, null=True)
@@ -41,18 +41,26 @@ class GeoPage(Page):
         ('image', ImageChooserBlock()),
         ('embed', EmbedBlock()),
     ], blank=True)
+    content_category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
+    def gallery_image_count(self):
+        return self.gallery_images.count()
+    def gallery_image_controller_count(self):
+        return self.gallery_images.count()/4
+
     content_panels = Page.content_panels + [
+        FieldPanel('content_category', widget=forms.Select),
         FieldPanel("abstract", classname="full"),
         StreamFieldPanel("body", classname="Full"),
+        InlinePanel('gallery_images', label="Gallery images"),
     ]
 
     def save(self, *args, **kwargs):
         app = App.objects.filter(name="cartoview_cms").first()
-        ContentCategory.assure_category_exists(self.get_parent().contentgroup.content_category.name)
-        category = TopicCategory.objects.filter(identifier=self.get_parent().contentgroup.content_category.name).first()
+        ContentCategory.assure_category_exists(self.content_category.name)
+        category = TopicCategory.objects.filter(identifier=self.content_category.name).first()
         self.category = category
         if self.app_instance is None:
             app_instance = AppInstance(

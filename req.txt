@@ -2,3 +2,4 @@ wagtail==1.13.4
 beautifulsoup4==4.6.0
 wagtailmenus==2.6
 django-widget-tweaks==1.4.3
+django-mathfilters==0.4.0
