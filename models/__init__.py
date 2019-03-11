@@ -33,6 +33,9 @@ from .case_study.CaseStudyIndex import CaseStudyIndex
 from .case_study.CaseStudy import CaseStudy
 from .case_study.CaseStudyGalleryImage import CaseStudyGalleryImage
 
+from .countries.CountriesIndex import CountriesIndex
+from .countries.Country import Country
+
 from .general.StaticPage import StaticPage
 from .forms.FormPage import FormPage
 
