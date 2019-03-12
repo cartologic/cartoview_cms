@@ -1,5 +1,6 @@
 {% extends "geonode_base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
 {% load i18n %}
 {% load base_tags %}
 {% load client_lib_tags %}
@@ -8,23 +9,51 @@
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
 {% block body_outer %}
+    <link href="{% static "cartoview_cms/css/cartoview_cms_news_index.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+
     <div class="page-header">
         <h2>{{ page.title }}</h2>
     </div>
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
-    {% for newsitem in newsitems %}
-        {% with newsitem=newsitem.specific %}
-            <h2><a href="{% pageurl newsitem %}">{{ newsitem.title }}</a></h2>
 
-            {% with newsitem.main_image as main_image %}
-                {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-            {% endwith %}
 
-            <p>{{ newsitem.intro }}</p>
-        {% endwith %}
-    {% endfor %}
+
+    <section class="blog-me pt-100 pb-100" id="blog">
+        <div class="container">
+            <div class="row">
+                {% for newsitem in newsitems %}
+                    {% with newsitem=newsitem.specific %}
+                        <div class="col-lg-3 col-md-4">
+                            <!-- Single Blog -->
+                            <div class="single-blog">
+                                <div class="blog-img">
+                                    {% with newsitem.main_image as main_image %}
+                                        {% if main_image %}{% image main_image fill-370x288 %}{% endif %}
+                                    {% endwith %}
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-title">
+                                        <h4><a href="{% pageurl newsitem %}">{{ newsitem.title }}</a></h4>
+                                        <div class="meta">
+                                            <ul>
+                                                <li>31 July 2018</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <p>{{ newsitem.intro }}</p>
+                                    <a href="{% pageurl newsitem %}" class="box_btn">read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
 
     <ul class="pagination">
         {% if newsitems.has_previous %}

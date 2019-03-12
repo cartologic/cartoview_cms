@@ -14,7 +14,7 @@ class NewsIndex(Page):
         # Update context to include only published posts, ordered by reverse-chron
         context = super(NewsIndex, self).get_context(request)
         newsitems = self.get_children().live().order_by('-first_published_at')
-        paginator = Paginator(newsitems, 6)  # Show 6 resources per page
+        paginator = Paginator(newsitems, 4)  # Show 4 resources per page
         page = request.GET.get('page')
         try:
             newsitems = paginator.page(page)
