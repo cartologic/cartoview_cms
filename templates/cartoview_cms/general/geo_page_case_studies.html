@@ -1,4 +1,6 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
+<link href="{% static "cartoview_cms/css/cartoview_cms_countries_index.css" %}?v={{ VERSION }}" rel="stylesheet"/>
 {% if case_studies %}
     <div class="panel-group">
         <div class="panel panel-default">
@@ -9,11 +11,24 @@
             </div>
             <div id="collapse1" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <ul>
+                    <div class="row">
                         {% for case_study in case_studies %}
-                            <li><a href="{% pageurl case_study %}">{{ case_study.title }}</a></li>
+                            {% with case_study=case_study.specific %}
+                                <div class="col-sm-4">
+                                    <div class="card img-responsive" style="width:100%">
+                                        <a href="{% pageurl case_study %}">
+                                            {% with case_study.thumbnail as main_image %}
+                                                {% if main_image %}{% image main_image width-1000 %}{% endif %}
+                                            {% endwith %}
+                                        </a>
+                                        <div class="card-body" style="padding-top: 10px">
+                                            <strong>{{ case_study.title }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endwith %}
                         {% endfor %}
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,8 +1,5 @@
-import json
-
 from modelcluster.fields import ParentalManyToManyField
-
-from cartoview.app_manager.models import App, AppInstance
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from django.db import models
 from django import forms
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
@@ -13,9 +10,6 @@ from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
-from geonode.base.models import TopicCategory
-from ..general.ContentCategory import ContentCategory
-
 
 class CaseStudy(Page):
     template = 'cartoview_cms/case_study/case_study.html'
@@ -23,6 +17,9 @@ class CaseStudy(Page):
     subpage_types = []
     show_in_menus_default = True
     abstract = models.CharField(max_length=120, blank=True, null=True)
+    thumbnail = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
+    )
     body = StreamField([
         ('paragraph', blocks.RichTextBlock(classname="full")),
         ('HTML', blocks.RawHTMLBlock()),
@@ -34,14 +31,10 @@ class CaseStudy(Page):
     ], blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
-    def gallery_image_count(self):
-        return self.gallery_images.count()
-    def gallery_image_controller_count(self):
-        return self.gallery_images.count()/4
-
     content_panels = Page.content_panels + [
         FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         FieldPanel("abstract", classname="full"),
+        ImageChooserPanel('thumbnail'),
         StreamFieldPanel("body", classname="Full"),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
