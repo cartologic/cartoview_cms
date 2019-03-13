@@ -9,38 +9,32 @@
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
 {% block body_outer %}
-    <link href="{% static "cartoview_cms/css/cartoview_cms_news_index.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+    <link href="{% static "cartoview_cms/css/cartoview_cms_countries_index.css" %}?v={{ VERSION }}" rel="stylesheet"/>
 
     <div class="page-header">
         <h2>{{ page.title }}</h2>
     </div>
 
-    <section class="blog-me pt-100 pb-100" id="blog">
-        <div class="container">
-            <div class="row">
-                {% for country in countries %}
-                    {% with country=country.specific %}
-                        <div class="col-lg-3 col-md-4">
-                            <!-- Single Blog -->
-                            <div class="single-blog">
-                                <div class="blog-img">
-                                    {% with country.main_image as main_image %}
-                                        {% if main_image %}{% image main_image width-400 %}{% endif %}
-                                    {% endwith %}
-                                </div>
-                                <div class="blog-content">
-                                    <div class="blog-title">
-                                        <h4><a href="{% pageurl country %}">{{ country.title }}</a></h4>
-                                    </div>
-                                </div>
+    <div class="container">
+        <div class="row">
+            {% for country in countries %}
+                {% with country=country.specific %}
+                    <div class="col-sm-2">
+                        <div class="card img-responsive" style="width:100%">
+                            <a href="{% pageurl country %}">
+                            {% with country.main_image as main_image %}
+                                {% if main_image %}{% image main_image width-1000 %}{% endif %}
+                            {% endwith %}
+                            </a>
+                            <div class="card-body" style="padding-top: 10px">
+                                <a href="{% pageurl country %}" class="btn btn-warning">{{ country.title }}</a>
                             </div>
                         </div>
-                    {% endwith %}
-                {% endfor %}
+                    </div>
+                {% endwith %}
+            {% endfor %}
 
-            </div>
         </div>
-    </section>
-
+    </div>
 
 {% endblock %}
