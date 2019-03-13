@@ -18,42 +18,45 @@
 
     {{ page.body|richtext }}
 
-    <p class="intro">
+    <div class="row">
         {% for item in page.gallery_images.all %}
             <div style="float: left; margin: 10px">
                 {% image item.image fill-320x240 %}
-            <p>{{ item.caption }}</p>
+                <p>{{ item.caption }}</p>
             </div>
         {% endfor %}
-    </p>
-    <hr/>
-    <p>
-        {% if page.tags.all.count %}
+    </div>
+    {% if page.tags.all.count %}
+        <div class="row">
             <div class="tags">
                 <h3>Tags</h3>
-                {% for tag in page.tags.all %}
-                    <a href="{% slugurl 'news-tags' %}?tag={{ tag }}">
-                        <button type="button">{{ tag }}</button>
-                    </a>
-                {% endfor %}
+                <div class="btn-group" role="group" aria-label="Tags">
+                    {% for tag in page.tags.all %}
+                        <a href="{% slugurl 'news-tags' %}?tag={{ tag }}" class="btn btn-primary" style="margin-right: 10px">
+                            {{ tag }}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
-        {% endif %}
-    </p>
+        </div>
+    {% endif %}
 
     {% with categories=page.categories.all %}
         {% if categories %}
-            <h3>Posted in:</h3>
-            <ul>
-                {% for category in categories %}
-                    <a href="{% slugurl 'news-categories' %}?category={{ category }}">
-                        <button type="button">{{ category.name }}</button>
-                    </a>
-                {% endfor %}
-            </ul>
+            <div class="row">
+                <h3>Posted in:</h3>
+                <div class="btn-group" role="group" aria-label="Tags">
+                    {% for category in categories %}
+                        <a href="{% slugurl 'news-categories' %}?category={{ category }}" class="btn btn-primary" style="margin-right: 10px">
+                            {{ category.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
         {% endif %}
     {% endwith %}
-
-    <p><a href="{{ page.get_parent.url }}">Return to news</a></p>
+    <hr/>
+    <div class="row"><a href="{{ page.get_parent.url }}" class="btn btn-warning">Return to news</a></div>
 
 {% endblock %}
 
