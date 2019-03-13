@@ -11,23 +11,22 @@
     <div class="page-header">
         <h2>{{ page.title }}</h2>
     </div>
-    <div class="card-deck">
-        {% for organization in organizations %}
-            {% with organization=organization.specific %}
-                <div class="card">
-                    <a href="{% pageurl organization %}">
-                        {% with organization.main_image as main_image %}
-                            {% if main_image %}{% image main_image width-1000 %}{% endif %}
-                        {% endwith %}
-                    </a>
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="{% pageurl organization %}">{{ organization.title }}</a></h3>
-                        <p class="card-text">{{ organization.intro }}</p>
+    <div class="container">
+        <div class="row">
+            {% for organization in organizations %}
+                {% with organization=organization.specific %}
+                    <div class="col-lg-2">
+                        <div class="card border-primary">
+                            <a href="{{ organization.link }}" target="_blank">
+                                {% with organization.thumbnail as main_image %}
+                                    {% if main_image %}{% image main_image width-1000 %}{% endif %}
+                                {% endwith %}
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <hr/>
-            {% endwith %}
-        {% endfor %}
+                {% endwith %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 

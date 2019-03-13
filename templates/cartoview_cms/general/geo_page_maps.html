@@ -1,3 +1,6 @@
+{% load wagtailcore_tags %}
+{% load static from staticfiles %}
+<link href="{% static "cartoview_cms/css/cartoview_cms_countries_index.css" %}?v={{ VERSION }}" rel="stylesheet"/>
 {% if maps %}
     <div class="panel-group">
         <div class="panel panel-default">
@@ -8,11 +11,20 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <ul>
+                    <div class="row">
                         {% for map in maps %}
-                            <li><a href="{{ map.get_absolute_url }}">{{ map.title }}</a></li>
+                            <div class="col-sm-4">
+                                <div class="card img-responsive" style="width:100%">
+                                    <a href="{{ map.get_absolute_url }}">
+                                        <img src="{{ map.thumbnail_url }}"/>
+                                    </a>
+                                    <div class="card-body" style="padding-top: 10px">
+                                        <strong>{{ map.title }}</strong>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
