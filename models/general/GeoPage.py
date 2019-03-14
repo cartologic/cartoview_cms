@@ -39,11 +39,6 @@ class GeoPage(Page):
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
-    def gallery_image_count(self):
-        return self.gallery_images.count()
-    def gallery_image_controller_count(self):
-        return self.gallery_images.count()/4
-
     content_panels = Page.content_panels + [
         FieldPanel('content_category', widget=forms.Select),
         FieldPanel("abstract", classname="full"),

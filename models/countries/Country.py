@@ -10,6 +10,8 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from geonode.documents.models import Document
+from geonode.maps.models import Map
 from ..case_study.CaseStudy import CaseStudy
 from ..news.NewsItem import NewsItem
 
@@ -41,6 +43,10 @@ class Country(Page):
         context = super(Country, self).get_context(request)
         case_studies = CaseStudy.objects.filter(categories__in=self.categories.all())
         news_items = NewsItem.objects.filter(categories__in=self.categories.all())
+        maps = Map.objects.filter(category__identifier__in=self.categories.all().values('name'))
+        documents = Document.objects.filter(category__identifier__in=self.categories.all().values('name'))
         context['case_studies'] = case_studies
         context['news_items'] = news_items
+        context['maps'] = maps
+        context['documents'] = documents
         return context
