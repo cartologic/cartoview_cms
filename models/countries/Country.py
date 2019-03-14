@@ -39,8 +39,8 @@ class Country(Page):
 
     def get_context(self, request):
         context = super(Country, self).get_context(request)
-        case_studies = CaseStudy.objects.filter(categories=self.categories.all())
-        news_items = NewsItem.objects.filter(categories=self.categories.all())
+        case_studies = CaseStudy.objects.filter(categories__in=self.categories.all())
+        news_items = NewsItem.objects.filter(categories__in=self.categories.all())
         context['case_studies'] = case_studies
         context['news_items'] = news_items
         return context
