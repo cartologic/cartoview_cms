@@ -10,6 +10,8 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from ..case_study.CaseStudy import CaseStudy
+from ..news.NewsItem import NewsItem
 
 class Country(Page):
     template = 'cartoview_cms/countries/country.html'
@@ -34,3 +36,11 @@ class Country(Page):
         StreamFieldPanel("body", classname="Full"),
         FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
     ]
+
+    def get_context(self, request):
+        context = super(Country, self).get_context(request)
+        case_studies = CaseStudy.objects.filter(categories=self.categories.all())
+        news_items = NewsItem.objects.filter(categories=self.categories.all())
+        context['case_studies'] = case_studies
+        context['news_items'] = news_items
+        return context

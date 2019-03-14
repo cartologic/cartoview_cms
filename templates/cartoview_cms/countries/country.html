@@ -16,6 +16,25 @@
     </div>
 
     {{ page.body }}
+    <hr/>
+
+
+{% with case_studies as case_studies %}
+    {% include 'cartoview_cms/general/geo_page_case_studies.html' %}
+{% endwith %}
+
+{% with news_items as news_items %}
+    {% include 'cartoview_cms/general/geo_page_news.html' %}
+{% endwith %}
+
+{% with maps as maps %}
+    {% include 'cartoview_cms/general/geo_page_maps.html' %}
+{% endwith %}
+
+{% with documents as documents %}
+    {% include 'cartoview_cms/general/geo_page_documents.html' %}
+{% endwith %}
+
 
 {% endblock %}
 
