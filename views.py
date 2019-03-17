@@ -6,8 +6,6 @@ from django.utils.decorators import method_decorator
 from cartoview.app_manager.models import AppInstance
 from cartoview.app_manager.views import StandardAppViews
 
-from .models import SeaLevelRise, WaterPollution, CoastalCliffInstability, CoastalErosion, GroundWaterQuality, LandSubsidence, SeaWaterIntrusion
-
 
 class CMS(StandardAppViews):
     def __init__(self, app_name):
@@ -16,20 +14,8 @@ class CMS(StandardAppViews):
     @staticmethod
     def get_geopage_from_app_instance(category_identifier, app_instance):
         result = None
-        if category_identifier == "seaLevelRise":
-            result = SeaLevelRise.objects.get(app_instance=app_instance)
-        elif category_identifier == "waterPollution":
-            result = WaterPollution.objects.get(app_instance=app_instance)
-        elif category_identifier == "coastalCliffInstability":
-            result = CoastalCliffInstability.objects.get(app_instance=app_instance)
-        elif category_identifier == "groundWaterQuality":
-            result = GroundWaterQuality.objects.get(app_instance=app_instance)
-        elif category_identifier == "landSubsidence":
-            result = LandSubsidence.objects.get(app_instance=app_instance)
-        elif category_identifier == "coastalErosion":
-            result = CoastalErosion.objects.get(app_instance=app_instance)
-        elif category_identifier == "seaWaterIntrusion":
-            result = SeaWaterIntrusion.objects.get(app_instance=app_instance)
+        # if category_identifier == "seaLevelRise":
+        #     result = SeaLevelRise.objects.get(app_instance=app_instance)
         return result
 
     @method_decorator(login_required)
