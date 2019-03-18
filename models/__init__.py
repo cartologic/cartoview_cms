@@ -29,6 +29,9 @@ from .countries.Country import Country
 from .trainings.TrainingsIndex import TrainingsIndex
 from .trainings.Training import Training
 
+from .meetings.MeetingsIndex import MeetingsIndex
+from .meetings.Meeting import Meeting
+
 from .organization.OrganizationsIndex import OrganizationsIndex
 from .organization.Organization import Organization
 

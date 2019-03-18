@@ -1,0 +1,76 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <link href="{% static "cartoview_cms/css/cartoview_cms_case_studies_index.css" %}?v={{ VERSION }}"
+          rel="stylesheet"/>
+    <div class="page-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+
+    <div class="intro">{{ page.abstract|richtext }}</div>
+    <section class="blog-me pt-100 pb-100" id="blog">
+        <div class="container">
+            <div class="row">
+                {% for meeting in meetings %}
+                    {% with training=training.specific %}
+                        <div class="col-lg-3 col-md-4">
+                            <!-- Single Blog -->
+                            <div class="single-blog">
+                                <div class="blog-img">
+                                    {% with meeting.thumbnail as main_image %}
+                                        {% if main_image %}{% image main_image fill-370x288 %}{% endif %}
+                                    {% endwith %}
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-title">
+                                        <h4><a href="{% pageurl meeting %}">{{ meeting.title }}</a></h4>
+                                        <div class="meta">
+                                            <ul>
+                                                <li>{{ meeting.first_published_at }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <p>{{ meeting.abstract }}</p>
+                                    <a href="{% pageurl meeting %}" class="box_btn">read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <ul class="pagination">
+        {% if meetings.has_previous %}
+            <li>
+                <a href="?page={{ meetings.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+            </li>
+        {% endif %}
+        {% for page_num in meetings.paginator.page_range %}
+            <li {% if page_num == meetings.number %} class="active"{% endif %}>
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endfor %}
+        {% if meetings.has_next %}
+            <li>
+                <a href="?page={{ meetings.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+            </li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
+
+
+
+
+
+
