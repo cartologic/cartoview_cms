@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
@@ -7,12 +8,17 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class Training(Page):
     template = 'cartoview_cms/trainings/training.html'
     parent_page_types = ['cartoview_cms.TrainingsIndex']
     subpage_types = []
+    abstract = models.CharField(max_length=120, blank=True, null=True)
+    thumbnail = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
+    )
     body = StreamField([
         ('paragraph', blocks.RichTextBlock(classname="full")),
         ('HTML', blocks.RawHTMLBlock()),
@@ -25,6 +31,8 @@ class Training(Page):
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("body", classname="Full"),
         FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+        FieldPanel("abstract", classname="full"),
+        ImageChooserPanel('thumbnail'),
+        StreamFieldPanel("body", classname="Full"),
     ]

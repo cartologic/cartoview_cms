@@ -15,7 +15,6 @@ class CaseStudy(Page):
     template = 'cartoview_cms/case_study/case_study.html'
     parent_page_types = ['cartoview_cms.CaseStudyIndex']
     subpage_types = []
-    show_in_menus_default = True
     abstract = models.CharField(max_length=120, blank=True, null=True)
     thumbnail = models.ForeignKey(
         'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
