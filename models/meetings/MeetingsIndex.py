@@ -5,7 +5,7 @@ from wagtail.wagtailcore.models import Page
 class MeetingsIndex(Page):
     template = 'cartoview_cms/meetings/meetings_index.html'
     parent_page_types = ['wagtailcore.Page', 'cartoview_cms.MenuItem']
-    subpage_types = ['cartoview_cms.Training']
+    subpage_types = ['cartoview_cms.Meeting']
 
     def get_context(self, request):
         # Update context to include only published trainings, ordered by reverse-chron
