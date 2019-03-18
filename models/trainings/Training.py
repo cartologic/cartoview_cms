@@ -1,7 +1,7 @@
 from django import forms
 from django.db import models
 from modelcluster.fields import ParentalManyToManyField
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
@@ -35,4 +35,5 @@ class Training(Page):
         FieldPanel("abstract", classname="full"),
         ImageChooserPanel('thumbnail'),
         StreamFieldPanel("body", classname="Full"),
+        InlinePanel('gallery_images', label="Gallery images"),
     ]

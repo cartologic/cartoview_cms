@@ -28,6 +28,7 @@ from .countries.Country import Country
 
 from .trainings.TrainingsIndex import TrainingsIndex
 from .trainings.Training import Training
+from .trainings.TrainingGalleryImage import TrainingGalleryImage
 
 from .meetings.MeetingsIndex import MeetingsIndex
 from .meetings.Meeting import Meeting
