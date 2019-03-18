@@ -19,6 +19,7 @@ class Country(Page):
     template = 'cartoview_cms/countries/country.html'
     parent_page_types = ['cartoview_cms.CountriesIndex']
     subpage_types = []
+    abstract = models.CharField(max_length=120, blank=True, null=True)
     main_image = models.ForeignKey(
         'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
     )
@@ -34,6 +35,7 @@ class Country(Page):
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
     content_panels = Page.content_panels + [
+        FieldPanel("abstract", classname="full"),
         ImageChooserPanel('main_image'),
         StreamFieldPanel("body", classname="Full"),
         FieldPanel('categories', widget=forms.CheckboxSelectMultiple),

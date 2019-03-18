@@ -16,24 +16,39 @@
     </div>
 
     <div class="container">
-        <div class="row">
-            {% for country in countries %}
-                {% with country=country.specific %}
-                    <div class="col-sm-2">
-                        <div class="card img-responsive" style="width:100%">
-                            <a href="{% pageurl country %}">
-                            {% with country.main_image as main_image %}
-                                {% if main_image %}{% image main_image width-1000 %}{% endif %}
-                            {% endwith %}
-                            </a>
-                            <div class="card-body" style="padding-top: 10px">
-                                <a href="{% pageurl country %}" class="btn btn-warning">{{ country.title }}</a>
+
+
+                <div class="row row-margin-bottom">
+        {% for country in countries %}
+            {% with country=country.specific %}
+                    <div class="col-md-5 no-padding lib-item" data-category="view">
+                        <div class="lib-panel">
+                            <div class="row box-shadow">
+                                <div class="col-md-6">
+                                    <a href="{% pageurl country %}">
+                                        {% with country.main_image as main_image %}
+                                            {% if main_image %}{% image main_image width-1000 %}{% endif %}
+                                        {% endwith %}
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="lib-row lib-header">
+                                        <a href="{% pageurl country %}">{{ country.title }}</a>
+                                        <div class="lib-header-seperator"></div>
+                                    </div>
+                                    <div class="lib-row lib-desc">
+                                        {{ country.abstract }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                {% endwith %}
-            {% endfor %}
-        </div>
+                    <div class="col-md-1"></div>
+
+            {% endwith %}
+        {% endfor %}
+                </div>
+
     </div>
 
 {% endblock %}
