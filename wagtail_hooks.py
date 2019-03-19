@@ -1,6 +1,8 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register)
 from .models.general.ContentCategory import ContentCategory
+from wagtail.wagtailcore import hooks
+from django.shortcuts import redirect
 
 
 class ContentCategoryModelAdmin(ModelAdmin):
@@ -17,3 +19,11 @@ class ContentCategoryModelAdmin(ModelAdmin):
 
 # Now you just need to register your customised ModelAdmin class with Wagtail
 modeladmin_register(ContentCategoryModelAdmin)
+
+
+@hooks.register('before_serve_document')
+def serve_document(document, request):
+    # eg. use document.file_extension, document.url, document.filename
+    if document.file_extension == 'pdf':
+        return redirect(document.file.url)
+    # no return means the normal page serve will operate
