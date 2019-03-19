@@ -10,7 +10,6 @@
 
 {% block body_outer %}
 
-
     <div class="page-header">
         <h2>{{ page.title }}</h2>
     </div>
@@ -30,9 +29,24 @@
                 </div>
             {% endfor %}
         </div>
-    <hr/>
+        <hr/>
     {% endif %}
 
+
+    {% if page.authors.all.count %}
+        <div class="row">
+            <div class="tags">
+                <h3>Author(s)</h3>
+                <div class="btn-group" role="group" aria-label="Tags">
+                    {% for author in page.authors.all %}
+                        <a href="{{ author.get_absolute_url }}" class="btn btn-info" style="margin-right: 10px;margin-top: 10px">
+                            {{ author.first_name }} {{ author.last_name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}

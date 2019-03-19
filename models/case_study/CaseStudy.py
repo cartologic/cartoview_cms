@@ -10,6 +10,8 @@ from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
+from geonode import settings
+
 
 class CaseStudy(Page):
     template = 'cartoview_cms/case_study/case_study.html'
@@ -28,9 +30,11 @@ class CaseStudy(Page):
         ('image', ImageChooserBlock()),
         ('embed', EmbedBlock()),
     ], blank=True)
+    authors = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='authors', blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 
     content_panels = Page.content_panels + [
+        FieldPanel('authors', widget=forms.CheckboxSelectMultiple),
         FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         FieldPanel("abstract", classname="full"),
         ImageChooserPanel('thumbnail'),

@@ -16,11 +16,9 @@
     </div>
 
     <div class="container">
-
-
-                <div class="row row-margin-bottom">
-        {% for country in countries %}
-            {% with country=country.specific %}
+        <div class="row row-margin-bottom">
+            {% for country in countries %}
+                {% with country=country.specific %}
                     <div class="col-md-5 no-padding lib-item" data-category="view">
                         <div class="lib-panel">
                             <div class="row box-shadow">
@@ -44,10 +42,9 @@
                         </div>
                     </div>
                     <div class="col-md-1"></div>
-
-            {% endwith %}
-        {% endfor %}
-                </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
 
     </div>
 
