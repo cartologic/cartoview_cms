@@ -1,4 +1,5 @@
 from wagtail.wagtailcore.models import Page
+from .Organization import Organization
 
 
 class OrganizationsIndex(Page):
@@ -9,8 +10,10 @@ class OrganizationsIndex(Page):
     def get_context(self, request):
         # Update context to include only published countries, ordered by reverse-chron
         context = super(OrganizationsIndex, self).get_context(request)
-        organizations = self.get_children().live().order_by('-first_published_at')
+        organizations= Organization.objects.live().descendant_of(self).filter(main_organization=False)
+        main_organizations= Organization.objects.live().descendant_of(self).filter(main_organization=True)
         context['organizations'] = organizations
+        context['main_organizations'] = main_organizations
         return context
 
     # Make sure that only one instance is created ever!

@@ -1,5 +1,6 @@
 {% extends "geonode_base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
 {% load i18n %}
 {% load base_tags %}
 {% load client_lib_tags %}
@@ -8,25 +9,82 @@
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
 {% block body_outer %}
+    <link href="{% static "cartoview_cms/css/cartoview_cms_countries_index.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+
     <div class="page-header">
         <h2>{{ page.title }}</h2>
     </div>
     <div class="container">
-        <div class="row">
-            {% for organization in organizations %}
-                {% with organization=organization.specific %}
-                    <div class="col-lg-2">
-                        <div class="card border-primary">
-                            <a href="{{ organization.link }}" target="_blank">
-                                {% with organization.thumbnail as main_image %}
-                                    {% if main_image %}{% image main_image width-1000 %}{% endif %}
-                                {% endwith %}
-                            </a>
+
+        {% for organization in main_organizations %}
+            {% with organization=organization.specific %}
+                <div class="row row-margin-bottom">
+                    <div class="col-md-12 no-padding lib-item" data-category="view">
+                        <div class="lib-panel">
+                            <div class="row box-shadow">
+                                <div class="col-md-4">
+                                    <a href="{{ organization.link }}" target="_blank">
+                                        {% with organization.thumbnail as main_image %}
+                                            {% if main_image %}{% image main_image width-1000 %}{% endif %}
+                                        {% endwith %}
+                                    </a>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="lib-row lib-header">
+                                        <h3>{{ organization.organization_title }}</h3>
+                                        <div class="lib-header-seperator"></div>
+                                        <a href="{{ organization.link }}" target="_blank">{{ organization.title }}</a>
+                                        <div class="lib-header-seperator"></div>
+                                    </div>
+                                    <div class="lib-row lib-desc">
+                                        <p>
+                                            {{ organization.organization_description }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+
+        <hr/>
+
+        <div class="row row-margin-bottom">
+            {% for organization in organizations %}
+                {% with organization=organization.specific %}
+                    <div class="col-md-5 no-padding lib-item" data-category="view">
+                        <div class="lib-panel">
+                            <div class="row box-shadow">
+                                <div class="col-md-6">
+                                    <a href="{{ organization.link }}" target="_blank">
+                                        {% with organization.thumbnail as main_image %}
+                                            {% if main_image %}{% image main_image width-1000 %}{% endif %}
+                                        {% endwith %}
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="lib-row lib-header">
+                                        <h3>{{ organization.organization_title }}</h3>
+                                        <div class="lib-header-seperator"></div>
+                                        <a href="{{ organization.link }}" target="_blank">{{ organization.title }}</a>
+                                        <div class="lib-header-seperator"></div>
+                                    </div>
+                                    <div class="lib-row lib-desc">
+                                        <p>
+                                            {{ organization.organization_description }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
                 {% endwith %}
             {% endfor %}
         </div>
+
     </div>
 {% endblock %}
 
