@@ -1,5 +1,7 @@
 import json
 
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+
 from geonode.maps.models import Map
 from geonode.documents.models import Document
 from cartoview.app_manager.models import App, AppInstance
@@ -26,6 +28,9 @@ class GeoPage(Page):
     subpage_types = []
     show_in_menus_default = True
     abstract = models.CharField(max_length=120, blank=True, null=True)
+    thumbnail = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
+    )
     body = StreamField([
         ('paragraph', blocks.RichTextBlock(classname="full")),
         ('HTML', blocks.RawHTMLBlock()),
@@ -42,6 +47,7 @@ class GeoPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('content_category', widget=forms.Select),
         FieldPanel("abstract", classname="full"),
+        ImageChooserPanel('thumbnail'),
         StreamFieldPanel("body", classname="Full"),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
