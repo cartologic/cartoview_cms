@@ -13,10 +13,10 @@
                     {% if forloop.first %}
                         <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
                             <div class="box">
-                                <a href="#" data-toggle="modal" data-target="#image_gallery{{ forloop.counter }}">
+                                <a href="#" data-toggle="modal" data-target="#image_gallery{{forloop.parentloop.counter}}{{ forloop.counter }}">
                                     <img src="{{ item.file.url }}">
                                 </a>
-                                <div class="modal fade" id="image_gallery{{ forloop.counter }}" tabindex="-1"
+                                <div class="modal fade" id="image_gallery{{forloop.parentloop.counter}}{{ forloop.counter }}" tabindex="-1"
                                      role="dialog">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -36,10 +36,10 @@
                     {% else %}
                         <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
                             <div class="box">
-                                <a href="#" data-toggle="modal" data-target="#image_gallery{{ forloop.counter }}">
+                                <a href="#" data-toggle="modal" data-target="#image_gallery{{forloop.parentloop.counter}}{{ forloop.counter }}">
                                     <img src="{{ item.file.url }}">
                                 </a>
-                                <div class="modal fade" id="image_gallery{{ forloop.counter }}" tabindex="-1"
+                                <div class="modal fade" id="image_gallery{{forloop.parentloop.counter}}{{ forloop.counter }}" tabindex="-1"
                                      role="dialog">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
