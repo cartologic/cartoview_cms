@@ -18,6 +18,10 @@
 
     {{ page.body }}
 
+    {% for block in page.content %}
+        {{ block }}
+    {% endfor %}
+
     <hr/>
 
 
