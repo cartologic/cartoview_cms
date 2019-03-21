@@ -87,3 +87,11 @@ class UnorderedListBlock(blocks.StructBlock):
         blocks.CharBlock(),
         label='Items',
     )
+
+
+class ImageGalleryBlock(blocks.StructBlock):
+    image = blocks.ListBlock(
+        ImageChooserBlock(),
+        icon='image',
+        label='Image',
+    )
