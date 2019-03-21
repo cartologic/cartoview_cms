@@ -21,6 +21,7 @@ INSTALLED_APPS += (
 
     'wagtailmenus',
     'widget_tweaks',
+    'wagtailfontawesome',
 )
 
 CARTOVIEW_CMS_CONTEXT_PROCESSORS = ('wagtailmenus.context_processors.wagtailmenus',)

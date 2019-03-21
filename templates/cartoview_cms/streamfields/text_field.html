@@ -1,0 +1,7 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static %}
+
+{% for item in self %}
+    {{ item.content|safe }}
+{% endfor %}

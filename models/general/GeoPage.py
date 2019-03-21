@@ -7,12 +7,10 @@ from geonode.documents.models import Document
 from cartoview.app_manager.models import App, AppInstance
 from django.db import models
 from django import forms
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailembeds.blocks import EmbedBlock
-from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from ..case_study.CaseStudy import CaseStudy
@@ -20,6 +18,8 @@ from ..news.NewsItem import NewsItem
 from ..countries.Country import Country
 from geonode.base.models import TopicCategory
 from .ContentCategory import ContentCategory
+from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
+    UnorderedListBlock
 
 
 class GeoPage(Page):
@@ -33,12 +33,42 @@ class GeoPage(Page):
     )
     body = StreamField([
         ('paragraph', blocks.RichTextBlock(classname="full")),
-        ('HTML', blocks.RawHTMLBlock()),
-        ('quote', blocks.BlockQuoteBlock()),
-        ('page_chooser', blocks.PageChooserBlock()),
         ('document', DocumentChooserBlock()),
-        ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
+        ('header', blocks.ListBlock(
+            HeaderBlock(),
+            template='cartoview_cms/streamfields/header.html',
+            icon="title", ))
+        ,
+        ('text_field', blocks.ListBlock(
+            TextFieldBlock(),
+            template='cartoview_cms/streamfields/text_field.html',
+            icon="fa-text-width", ))
+        ,
+        ('list', blocks.ListBlock(
+            UnorderedListBlock(),
+            template='cartoview_cms/streamfields/list.html',
+            icon="list-ul"))
+        ,
+        ('accordions', blocks.ListBlock(
+            AccordionBlock(),
+            template='cartoview_cms/streamfields/accordion.html',
+            icon='list-ol', ))
+        ,
+        ('horizontal_tabs', blocks.ListBlock(
+            TabBlock(),
+            template='cartoview_cms/streamfields/horizontal_tab.html',
+            icon='list-ol', ))
+        ,
+        ('verticale_tabs', blocks.ListBlock(
+            TabBlock(),
+            template='cartoview_cms/streamfields/vertical_tab.html',
+            icon='list-ol', ))
+        ,
+        ('image_text_overlay', blocks.ListBlock(
+            ImageTextOverlayBlock(),
+            template='cartoview_cms/streamfields/image_text_overlay.html',
+            icon='fa-image', ))
+        ,
     ], blank=True)
     content_category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)
     category = models.ForeignKey(TopicCategory, on_delete=models.SET_NULL, null=True, blank=True)
@@ -49,7 +79,6 @@ class GeoPage(Page):
         FieldPanel("abstract", classname="full"),
         ImageChooserPanel('thumbnail'),
         StreamFieldPanel("body", classname="Full"),
-        InlinePanel('gallery_images', label="Gallery images"),
     ]
 
     def get_context(self, request):

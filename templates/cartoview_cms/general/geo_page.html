@@ -16,47 +16,31 @@
         <h2>{{ page.title }}</h2>
     </div>
 
-    {{ page.body }}
-
-    {% for block in page.content %}
+    {% for block in page.body %}
         {{ block }}
     {% endfor %}
 
     <hr/>
 
+    {% with case_studies as case_studies %}
+        {% include 'cartoview_cms/general/geo_page_case_studies.html' %}
+    {% endwith %}
 
-    {% if page.gallery_images %}
-        <div class="row">
-            {% for item in page.gallery_images.all %}
-                <div class="col-md-3">
-                    <div class="thumbnail">
-                        {% image item.image fill-250x250 %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    <hr/>
-    {% endif %}
+    {% with news_items as news_items %}
+        {% include 'cartoview_cms/general/geo_page_news.html' %}
+    {% endwith %}
 
-{% with case_studies as case_studies %}
-    {% include 'cartoview_cms/general/geo_page_case_studies.html' %}
-{% endwith %}
+    {% with maps as maps %}
+        {% include 'cartoview_cms/general/geo_page_maps.html' %}
+    {% endwith %}
 
-{% with news_items as news_items %}
-    {% include 'cartoview_cms/general/geo_page_news.html' %}
-{% endwith %}
+    {% with documents as documents %}
+        {% include 'cartoview_cms/general/geo_page_documents.html' %}
+    {% endwith %}
 
-{% with maps as maps %}
-    {% include 'cartoview_cms/general/geo_page_maps.html' %}
-{% endwith %}
-
-{% with documents as documents %}
-    {% include 'cartoview_cms/general/geo_page_documents.html' %}
-{% endwith %}
-
-{% with countries as countries %}
-    {% include 'cartoview_cms/general/geo_page_countries.html' %}
-{% endwith %}
+    {% with countries as countries %}
+        {% include 'cartoview_cms/general/geo_page_countries.html' %}
+    {% endwith %}
 
 
 

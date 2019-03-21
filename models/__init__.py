@@ -1,7 +1,6 @@
 from .general.ContentGroup import ContentGroup
 from .general.ContentCategory import ContentCategory
 from .general.GeoPage import GeoPage
-from .general.GeoPageGalleryImage import GeoPageGalleryImage
 from .menu.MenuItem import MenuItem
 from .menu.MenuLink import MenuLink
 
