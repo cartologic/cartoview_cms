@@ -41,6 +41,14 @@
                                             {{ organization.organization_description }}
                                         </p>
                                     </div>
+                                    <div class="lib-row lib-header" style="width: 150px; margin-bottom: 20px;">
+                                        <div class="lib-header-seperator"></div>
+                                        {% with country=organization.related_country.specific %}
+                                            <a href="{% pageurl country %}">
+                                                <img style="margin-top:10px;" src="{{ country.main_image.file.url }}"/>
+                                            </a>
+                                        {% endwith %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +71,14 @@
                                             {% if main_image %}{% image main_image width-1000 %}{% endif %}
                                         {% endwith %}
                                     </a>
+                                    {% with country=organization.related_country.specific %}
+                                        <a href="{% pageurl country %}" style="width: 50px;">
+                                            {% if country.main_image %}
+                                                <img style="margin-top:10px; width: 80px;"
+                                                     src="{{ country.main_image.file.url }}"/>
+                                            {% endif %}
+                                        </a>
+                                    {% endwith %}
                                 </div>
                                 <div class="col-md-6">
                                     <div class="lib-row lib-header">
