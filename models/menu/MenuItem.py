@@ -6,5 +6,6 @@ class MenuItem(MenuPage):
                      'cartoview_cms.GeoPage', 'cartoview_cms.FormPage', 'cartoview_cms.ContentGroup',
                      'cartoview_cms.CaseStudyIndex', 'cartoview_cms.CountriesIndex', 'cartoview_cms.OrganizationsIndex',
                      'cartoview_cms.TrainingsIndex', 'cartoview_cms.NewsIndex', 'cartoview_cms.MeetingsIndex',
+                     'cartoview_cms.WorkshopsIndex',
                      ]
     show_in_menus_default = True
