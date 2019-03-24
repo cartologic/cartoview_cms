@@ -57,7 +57,9 @@
             {% endwith %}
         {% endfor %}
 
-        <hr/>
+    <div class="page-header">
+        <h2>Partners</h2>
+    </div>
 
         <div class="row row-margin-bottom">
             {% for organization in organizations %}
@@ -82,7 +84,6 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="lib-row lib-header">
-                                        <h3>{{ organization.organization_title }}</h3>
                                         <div class="lib-header-seperator"></div>
                                         <a href="{{ organization.link }}" target="_blank">{{ organization.title }}</a>
                                         <div class="lib-header-seperator"></div>
