@@ -5,11 +5,10 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailembeds.blocks import EmbedBlock
-from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-
+from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
+    UnorderedListBlock, ImageGalleryBlock
 
 class Meeting(Page):
     template = 'cartoview_cms/meetings/meeting.html'
@@ -21,12 +20,47 @@ class Meeting(Page):
     )
     body = StreamField([
         ('paragraph', blocks.RichTextBlock(classname="full")),
-        ('HTML', blocks.RawHTMLBlock()),
-        ('quote', blocks.BlockQuoteBlock()),
-        ('page_chooser', blocks.PageChooserBlock()),
         ('document', DocumentChooserBlock()),
-        ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
+        ('header', blocks.ListBlock(
+            HeaderBlock(),
+            template='cartoview_cms/streamfields/header.html',
+            icon="title", ))
+        ,
+        ('text_field', blocks.ListBlock(
+            TextFieldBlock(),
+            template='cartoview_cms/streamfields/text_field.html',
+            icon="fa-text-width", ))
+        ,
+        ('list', blocks.ListBlock(
+            UnorderedListBlock(),
+            template='cartoview_cms/streamfields/list.html',
+            icon="list-ul"))
+        ,
+        ('accordions', blocks.ListBlock(
+            AccordionBlock(),
+            template='cartoview_cms/streamfields/accordion.html',
+            icon='list-ol', ))
+        ,
+        ('horizontal_tabs', blocks.ListBlock(
+            TabBlock(),
+            template='cartoview_cms/streamfields/horizontal_tab.html',
+            icon='list-ol', ))
+        ,
+        ('verticale_tabs', blocks.ListBlock(
+            TabBlock(),
+            template='cartoview_cms/streamfields/vertical_tab.html',
+            icon='list-ol', ))
+        ,
+        ('image_text_overlay', blocks.ListBlock(
+            ImageTextOverlayBlock(),
+            template='cartoview_cms/streamfields/image_text_overlay.html',
+            icon='fa-image', ))
+        ,
+        ('image_gallery', blocks.ListBlock(
+            ImageGalleryBlock(),
+            template='cartoview_cms/streamfields/image_gallery.html',
+            icon='fa-camera-retro', ))
+        ,
     ], blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
 

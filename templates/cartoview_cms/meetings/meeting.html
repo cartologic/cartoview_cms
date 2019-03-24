@@ -15,7 +15,10 @@
         <h2>{{ page.title }}</h2>
     </div>
 
-    {{ page.body }}
+    {% for block in page.body %}
+        {{ block }}
+    {% endfor %}
+
 
 {% endblock %}
 
