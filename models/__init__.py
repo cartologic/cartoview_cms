@@ -20,7 +20,6 @@ from .news.NewsCategoryIndex import NewsCategoryIndex
 
 from .case_study.CaseStudyIndex import CaseStudyIndex
 from .case_study.CaseStudy import CaseStudy
-from .case_study.CaseStudyGalleryImage import CaseStudyGalleryImage
 
 from .countries.CountriesIndex import CountriesIndex
 from .countries.Country import Country
