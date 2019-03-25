@@ -11,7 +11,7 @@ class Organization(Page):
     parent_page_types = ['cartoview_cms.OrganizationsIndex']
     subpage_types = []
     thumbnail = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
+        'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+', blank=True, null=True
     )
     link = models.URLField(max_length=120, blank=True, null=True)
     related_country = models.ForeignKey(Country, on_delete=models.PROTECT, related_name="related_country", blank=True, null=True)

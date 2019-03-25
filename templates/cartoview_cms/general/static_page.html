@@ -12,6 +12,9 @@
         <h2>{{ page.title }}</h2>
     </div>
 
-    {% include "cartoview_cms/partials/streamfield.html" with content=self.body %}
+    {% for block in page.body %}
+        {{ block }}
+    {% endfor %}
+
 
 {% endblock %}

@@ -16,16 +16,10 @@
 
     <div class="intro">{{ page.intro }}</div>
 
-    {{ page.body|richtext }}
+    {% for block in page.body %}
+        {{ block }}
+    {% endfor %}
 
-    <div class="row">
-        {% for item in page.gallery_images.all %}
-            <div style="float: left; margin: 10px">
-                {% image item.image fill-320x240 %}
-                <p>{{ item.caption }}</p>
-            </div>
-        {% endfor %}
-    </div>
     {% if page.tags.all.count %}
         <div class="row">
             <div class="tags">

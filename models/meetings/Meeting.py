@@ -16,7 +16,7 @@ class Meeting(Page):
     subpage_types = []
     abstract = models.CharField(max_length=120, blank=True, null=True)
     thumbnail = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+', blank=True, null=True
+        'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+', blank=True, null=True
     )
     body = StreamField([
         ('paragraph', blocks.RichTextBlock(classname="full")),

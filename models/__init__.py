@@ -14,7 +14,6 @@ from .blog.BlogCategoryIndex import BlogCategoryIndex
 from .news.NewsIndex import NewsIndex
 from .news.NewsItemTag import NewsItemTag
 from .news.NewsItem import NewsItem
-from .news.NewsItemGalleryImage import NewsItemGalleryImage
 from .news.NewsTagIndex import NewsTagIndex
 from .news.NewsCategoryIndex import NewsCategoryIndex
 
