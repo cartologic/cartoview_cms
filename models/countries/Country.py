@@ -14,6 +14,7 @@ from ..case_study.CaseStudy import CaseStudy
 from ..news.NewsItem import NewsItem
 from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
     UnorderedListBlock, ImageGalleryBlock
+from ..streamfields.MapBlock import MapBlock
 
 class Country(Page):
     template = 'cartoview_cms/countries/country.html'
@@ -65,6 +66,11 @@ class Country(Page):
             ImageGalleryBlock(),
             template='cartoview_cms/streamfields/image_gallery.html',
             icon='fa-camera-retro', ))
+        ,
+        ('map', blocks.ListBlock(
+            MapBlock(),
+            template='cartoview_cms/streamfields/map.html',
+            icon='fa-globe', ))
         ,
     ], blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)

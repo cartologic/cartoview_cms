@@ -13,6 +13,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from .NewsItemTag import NewsItemTag
 from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
     UnorderedListBlock, ImageGalleryBlock
+from ..streamfields.MapBlock import MapBlock
 
 
 class NewsItem(Page):
@@ -66,6 +67,11 @@ class NewsItem(Page):
             ImageGalleryBlock(),
             template='cartoview_cms/streamfields/image_gallery.html',
             icon='fa-camera-retro', ))
+        ,
+        ('map', blocks.ListBlock(
+            MapBlock(),
+            template='cartoview_cms/streamfields/map.html',
+            icon='fa-globe', ))
         ,
     ], blank=True)
     tags = ClusterTaggableManager(through=NewsItemTag, blank=True)

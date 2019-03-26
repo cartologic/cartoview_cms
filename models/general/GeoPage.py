@@ -20,6 +20,7 @@ from geonode.base.models import TopicCategory
 from .ContentCategory import ContentCategory
 from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
     UnorderedListBlock, ImageGalleryBlock
+from ..streamfields.MapBlock import MapBlock
 
 
 class GeoPage(Page):
@@ -73,6 +74,11 @@ class GeoPage(Page):
             ImageGalleryBlock(),
             template='cartoview_cms/streamfields/image_gallery.html',
             icon='fa-camera-retro', ))
+        ,
+        ('map', blocks.ListBlock(
+            MapBlock(),
+            template='cartoview_cms/streamfields/map.html',
+            icon='fa-globe', ))
         ,
     ], blank=True)
     content_category = models.ForeignKey('cartoview_cms.ContentCategory', on_delete=models.PROTECT)

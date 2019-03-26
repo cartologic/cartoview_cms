@@ -6,6 +6,7 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
     UnorderedListBlock, ImageGalleryBlock
+from ..streamfields.MapBlock import MapBlock
 
 
 class StaticPage(Page):
@@ -52,6 +53,11 @@ class StaticPage(Page):
             ImageGalleryBlock(),
             template='cartoview_cms/streamfields/image_gallery.html',
             icon='fa-camera-retro', ))
+        ,
+        ('map', blocks.ListBlock(
+            MapBlock(),
+            template='cartoview_cms/streamfields/map.html',
+            icon='fa-globe', ))
         ,
     ], blank=True)
 

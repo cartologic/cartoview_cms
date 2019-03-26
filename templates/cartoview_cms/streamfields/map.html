@@ -1,0 +1,8 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static %}
+
+{% for item in self %}
+    <iframe style="border: none;" height="600" width="100%" src="{{ item.map.detail_url }}/embed"></iframe>
+    <hr/>
+{% endfor %}

@@ -9,6 +9,7 @@ from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from ..streamfields.Blocks import ImageTextOverlayBlock, AccordionBlock, HeaderBlock, TabBlock, TextFieldBlock, \
     UnorderedListBlock, ImageGalleryBlock
+from ..streamfields.MapBlock import MapBlock
 
 
 class Workshop(Page):
@@ -61,6 +62,11 @@ class Workshop(Page):
             ImageGalleryBlock(),
             template='cartoview_cms/streamfields/image_gallery.html',
             icon='fa-camera-retro', ))
+        ,
+        ('map', blocks.ListBlock(
+            MapBlock(),
+            template='cartoview_cms/streamfields/map.html',
+            icon='fa-globe', ))
         ,
     ], blank=True)
     categories = ParentalManyToManyField('cartoview_cms.ContentCategory', blank=True)
