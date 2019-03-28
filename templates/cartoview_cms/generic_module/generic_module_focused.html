@@ -1,0 +1,117 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <link href="{% static "cartoview_cms/css/generic_module/generic_module_focused.css" %}?v={{ VERSION }}"
+          rel="stylesheet"/>
+    <div class="page-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+
+    <div class="container">
+
+        <h2>{{ page.first_title }}</h2>
+        <hr/>
+        <div class="row row-margin-bottom">
+            {% for resource in resources %}
+                {% with resource=resource.specific %}
+                    {% if resource.focused %}
+                        <div class="col-md-12 no-padding lib-item"
+                             data-category="view">
+                            <div class="lib-panel">
+                                <div class="row box-shadow">
+                                    <div class="col-md-4">
+                                        <a href="{% if resource.is_redirect %} {{ resource.redirect_link }} {% else %} {% pageurl resource %} {% endif %}">
+                                            {% with resource.thumbnail as thumbnail %}
+                                                {% if thumbnail %}{% image thumbnail width-1000 %}{% endif %}
+                                            {% endwith %}
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="lib-row lib-header">
+                                            <a href="{% if resource.is_redirect %} {{ resource.redirect_link }} {% else %} {% pageurl resource %} {% endif %}">{{ resource.title }}</a>
+                                            <div class="lib-header-seperator"></div>
+                                        </div>
+                                        <div class="lib-row lib-desc">
+                                            <p>{{ resource.abstract }}</p>
+                                        </div>
+                                        <div class="lib-row lib-header" style="width: 150px; margin-bottom: 20px;">
+                                            <div class="lib-header-seperator"></div>
+                                            {% if resource.related_page %}
+                                                {% with related_resource=resource.related_page.specific %}
+                                                    <a href="{% pageurl related_resource %}">
+                                                        <img style="margin-top:10px;"
+                                                             src="{{ related_resource.thumbnail.file.url }}"/>
+                                                    </a>
+                                                {% endwith %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    
+        <div class="page-header">
+            <h2>{{ page.second_title }}</h2>
+        </div>
+        <div class="row row-margin-bottom">
+            {% for resource in resources %}
+                {% with resource=resource.specific %}
+                    {% if not resource.focused %}
+                        <div class="col-md-5 no-padding lib-item"
+                             data-category="view">
+                            <div class="lib-panel">
+                                <div class="row box-shadow">
+                                    <div class="col-md-6">
+                                        <a href="{% if resource.is_redirect %} {{ resource.redirect_link }} {% else %} {% pageurl resource %} {% endif %}">
+                                            {% with resource.thumbnail as thumbnail %}
+                                                {% if thumbnail %}{% image thumbnail width-1000 %}{% endif %}
+                                            {% endwith %}
+                                        </a>
+                                        {% if resource.related_page %}
+                                            {% with related_resource=resource.related_page.specific %}
+                                                <a href="{% pageurl related_resource %}" style="width: 50px;">
+                                                    {% if related_resource.thumbnail %}
+                                                        <img style="margin-top:10px; width: 80px;"
+                                                             src="{{ related_resource.thumbnail.file.url }}"/>
+                                                    {% endif %}
+                                                </a>
+                                            {% endwith %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="lib-row lib-header">
+                                            <a href="{% if resource.is_redirect %} {{ resource.redirect_link }} {% else %} {% pageurl resource %} {% endif %}">{{ resource.title }}</a>
+                                            <div class="lib-header-seperator"></div>
+                                        </div>
+                                        <div class="lib-row lib-desc">
+                                            <p>{{ resource.abstract }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
+
+
+
+
+
+

@@ -2,6 +2,6 @@
 {% load wagtailcore_tags %}
 {% load static %}
 
-{% for item in self %}
-    <{{ item.header }}>{{ item.text }}</{{ item.header }}>
-{% endfor %}
+<{{ value.header }}>
+    {{ value.text }}
+</{{ value.header }}>

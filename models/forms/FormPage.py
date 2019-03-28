@@ -12,6 +12,7 @@ class FormField(AbstractFormField):
 
 
 class FormPage(AbstractEmailForm):
+    show_in_menus_default = True
     template = 'cartoview_cms/forms/form_page.html'
     intro = RichTextField(blank=True)
     thank_you_text = RichTextField(blank=True)
