@@ -1,0 +1,17 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static from staticfiles %}
+
+<div class="row">
+    <div class="tags">
+        <h3>{{ value.title }}</h3>
+        <div class="btn-group" role="group" aria-label="Tags">
+            {% for item in value.users %}
+                <a href="{{ item.get_absolute_url }}" class="btn btn-info" target="_blank"
+                   style="margin-right: 10px;margin-top: 10px">
+                    {{ item.first_name }} {{ item.last_name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
