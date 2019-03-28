@@ -1,0 +1,9 @@
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static %}
+
+<ul{% if value.bullet_icon %} style="list-style-image: url('{{ ul.bullet_icon.file.url }}');"{% endif %}>
+    {% for bullet in value.content %}
+        <li>{{ bullet|safe }}</li>
+    {% endfor %}
+</ul>

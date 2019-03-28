@@ -1,0 +1,75 @@
+{% extends "geonode_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% load base_tags %}
+{% load client_lib_tags %}
+
+{% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+    <link href="{% static "cartoview_cms/css/generic_module/generic_module_default.css" %}?v={{ VERSION }}"
+          rel="stylesheet"/>
+    <div class="page-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+
+    <div class="intro">{{ page.abstract|richtext }}</div>
+    <section class="blog-me pt-100 pb-100" id="blog">
+        <div class="container">
+            <div class="row">
+                {% for resource in resources %}
+                    {% with resource=resource.specific %}
+                        <div class="col-lg-3 col-md-4">
+                            <!-- Single Item -->
+                            <div class="single-blog">
+                                <div class="blog-img">
+                                    {% with resource.thumbnail as thumbnail %}
+                                        {% if thumbnail %}{% image thumbnail fill-370x288 %}{% endif %}
+                                    {% endwith %}
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-title">
+                                        <h4><a href="{% pageurl resource %}">{{ resource.title }}</a></h4>
+                                        <div class="meta">
+                                            <ul>
+                                                <li>{{ resource.first_published_at }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <p>{{ resource.abstract }}</p>
+                                    <a href="{% pageurl resource %}" class="box_btn">read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <ul class="pagination">
+        {% if resources.has_previous %}
+            <li>
+                <a href="?page={{ resources.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+            </li>
+        {% endif %}
+        {% for page_num in resources.paginator.page_range %}
+            <li {% if page_num == resources.number %} class="active"{% endif %}>
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endfor %}
+        {% if resources.has_next %}
+            <li>
+                <a href="?page={{ resources.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+            </li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
+
+
+
+
+
+
