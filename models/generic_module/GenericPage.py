@@ -1,11 +1,11 @@
 import json
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 from django.db import models
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, MultiFieldPanel, PageChooserPanel, \
+from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, MultiFieldPanel, PageChooserPanel, \
     FieldRowPanel
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtaildocs.blocks import DocumentChooserBlock
+from wagtail.core.fields import StreamField
+from wagtail.core.models import Page
+from wagtail.documents.blocks import DocumentChooserBlock
 
 from cartoview.app_manager.models import AppInstance, App
 from ..streamfields.Blocks import *
