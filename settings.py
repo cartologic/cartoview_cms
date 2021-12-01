@@ -1,26 +1,24 @@
-MIDDLEWARE_CLASSES += (
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+MIDDLEWARE += (
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 )
 
 INSTALLED_APPS += (
-    'wagtail.wagtailforms',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailsites',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailsearch',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtailcore',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
     'wagtail.contrib.modeladmin',
 
     'modelcluster',
 
     'wagtailmenus',
-    'widget_tweaks',
     'wagtailfontawesome',
 )
 
@@ -28,4 +26,5 @@ CARTOVIEW_CMS_CONTEXT_PROCESSORS = ('wagtailmenus.context_processors.wagtailmenu
 
 TEMPLATES[0]["OPTIONS"]['context_processors'] += CARTOVIEW_CMS_CONTEXT_PROCESSORS
 
-WAGTAIL_SITE_NAME = 'CMS'
+# SITE_NAME declared at cartoview.settings.py
+WAGTAIL_SITE_NAME = "CMS"

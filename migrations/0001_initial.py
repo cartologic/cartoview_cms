@@ -6,10 +6,10 @@ import cartoview_cms.models.streamfields.Blocks
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.wagtailcore.blocks
-import wagtail.wagtailcore.fields
-import wagtail.wagtaildocs.blocks
-import wagtail.wagtailimages.blocks
+import wagtail.core.blocks
+import wagtail.core.fields
+import wagtail.documents.blocks
+import wagtail.images.blocks
 
 
 class Migration(migrations.Migration):
@@ -47,8 +47,8 @@ class Migration(migrations.Migration):
                 ('to_address', models.CharField(blank=True, help_text='Optional - form submissions will be emailed to these addresses. Separate multiple addresses by comma.', max_length=255, verbose_name='to address')),
                 ('from_address', models.CharField(blank=True, max_length=255, verbose_name='from address')),
                 ('subject', models.CharField(blank=True, max_length=255, verbose_name='subject')),
-                ('intro', wagtail.wagtailcore.fields.RichTextField(blank=True)),
-                ('thank_you_text', wagtail.wagtailcore.fields.RichTextField(blank=True)),
+                ('intro', wagtail.core.fields.RichTextField(blank=True)),
+                ('thank_you_text', wagtail.core.fields.RichTextField(blank=True)),
             ],
             options={
                 'verbose_name': 'Form with Email',
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ('focused', models.BooleanField(default=False, help_text=b'You should select the <b>focused template</b> for the Generic Module!.', verbose_name=b'Focused')),
                 ('is_redirect', models.BooleanField(default=False, help_text=b'Redirct to an <b>External</b> link', verbose_name=b'Redirect External')),
                 ('redirect_link', models.CharField(blank=True, max_length=500, null=True)),
-                ('body', wagtail.wagtailcore.fields.StreamField([(b'header', wagtail.wagtailcore.blocks.StructBlock([(b'header', wagtail.wagtailcore.blocks.ChoiceBlock(choices=[(b'h1', b'H1'), (b'h2', b'H2'), (b'h3', b'H3'), (b'h4', b'H4'), (b'h5', b'H5'), (b'h6', b'H6')], label=b'Header Size')), (b'text', wagtail.wagtailcore.blocks.CharBlock(label=b'Text', max_length=50))])), (b'paragraph', wagtail.wagtailcore.blocks.RichTextBlock(classname=b'full')), (b'document', wagtail.wagtaildocs.blocks.DocumentChooserBlock()), (b'list', wagtail.wagtailcore.blocks.StructBlock([(b'content', wagtail.wagtailcore.blocks.ListBlock(wagtail.wagtailcore.blocks.CharBlock(), label=b'Items'))])), (b'accordions', wagtail.wagtailcore.blocks.StructBlock([(b'title', wagtail.wagtailcore.blocks.CharBlock(label=b'Title', max_length=50)), (b'content', wagtail.wagtailcore.blocks.RichTextBlock(label=b'Content'))])), (b'image_text_overlay', wagtail.wagtailcore.blocks.StructBlock([(b'image', wagtail.wagtailimages.blocks.ImageChooserBlock(label=b'Image')), (b'text', wagtail.wagtailcore.blocks.CharBlock(label=b'Text', max_length=200))])), (b'image_gallery', wagtail.wagtailcore.blocks.StructBlock([(b'image', wagtail.wagtailcore.blocks.ListBlock(wagtail.wagtailimages.blocks.ImageChooserBlock(), icon=b'image', label=b'Image'))])), (b'map', wagtail.wagtailcore.blocks.StructBlock([(b'map', cartoview_cms.models.streamfields.Blocks.MapChooserBlock(required=True))])), (b'separator', cartoview_cms.models.streamfields.Blocks.SeparatorBlock()), (b'related_users', wagtail.wagtailcore.blocks.StructBlock([(b'title', wagtail.wagtailcore.blocks.CharBlock(help_text=b'Section title as it appears to the users', label=b'Title', max_length=200)), (b'users', wagtail.wagtailcore.blocks.ListBlock(cartoview_cms.models.streamfields.Blocks.UserChooserBlock(required=True), label=b'Users'))])), (b'related_module', wagtail.wagtailcore.blocks.StructBlock([(b'title', wagtail.wagtailcore.blocks.CharBlock(help_text=b'Section title as it appears to the users', label=b'Title', max_length=200)), (b'display_size', wagtail.wagtailcore.blocks.ChoiceBlock(choices=[(b'1', b'1 - Smallest'), (b'2', b'2'), (b'3', b'3'), (b'4', b'4 - Recommended'), (b'5', b'5'), (b'6', b'6'), (b'7', b'7'), (b'8', b'8'), (b'9', b'9'), (b'10', b'10'), (b'11', b'11'), (b'12', b'12 - Largest')], label=b'Display Size')), (b'pages', wagtail.wagtailcore.blocks.ListBlock(wagtail.wagtailcore.blocks.PageChooserBlock(target_model=['cartoview_cms.GenericPage']), label=b'Items'))]))], blank=True)),
+                ('body', wagtail.core.fields.StreamField([(b'header', wagtail.core.blocks.StructBlock([(b'header', wagtail.core.blocks.ChoiceBlock(choices=[(b'h1', b'H1'), (b'h2', b'H2'), (b'h3', b'H3'), (b'h4', b'H4'), (b'h5', b'H5'), (b'h6', b'H6')], label=b'Header Size')), (b'text', wagtail.core.blocks.CharBlock(label=b'Text', max_length=50))])), (b'paragraph', wagtail.core.blocks.RichTextBlock(classname=b'full')), (b'document', wagtail.documents.blocks.DocumentChooserBlock()), (b'list', wagtail.core.blocks.StructBlock([(b'content', wagtail.core.blocks.ListBlock(wagtail.core.blocks.CharBlock(), label=b'Items'))])), (b'accordions', wagtail.core.blocks.StructBlock([(b'title', wagtail.core.blocks.CharBlock(label=b'Title', max_length=50)), (b'content', wagtail.core.blocks.RichTextBlock(label=b'Content'))])), (b'image_text_overlay', wagtail.core.blocks.StructBlock([(b'image', wagtail.images.blocks.ImageChooserBlock(label=b'Image')), (b'text', wagtail.core.blocks.CharBlock(label=b'Text', max_length=200))])), (b'image_gallery', wagtail.core.blocks.StructBlock([(b'image', wagtail.core.blocks.ListBlock(wagtail.images.blocks.ImageChooserBlock(), icon=b'image', label=b'Image'))])), (b'map', wagtail.core.blocks.StructBlock([(b'map', cartoview_cms.models.streamfields.Blocks.MapChooserBlock(required=True))])), (b'separator', cartoview_cms.models.streamfields.Blocks.SeparatorBlock()), (b'related_users', wagtail.core.blocks.StructBlock([(b'title', wagtail.core.blocks.CharBlock(help_text=b'Section title as it appears to the users', label=b'Title', max_length=200)), (b'users', wagtail.core.blocks.ListBlock(cartoview_cms.models.streamfields.Blocks.UserChooserBlock(required=True), label=b'Users'))])), (b'related_module', wagtail.core.blocks.StructBlock([(b'title', wagtail.core.blocks.CharBlock(help_text=b'Section title as it appears to the users', label=b'Title', max_length=200)), (b'display_size', wagtail.core.blocks.ChoiceBlock(choices=[(b'1', b'1 - Smallest'), (b'2', b'2'), (b'3', b'3'), (b'4', b'4 - Recommended'), (b'5', b'5'), (b'6', b'6'), (b'7', b'7'), (b'8', b'8'), (b'9', b'9'), (b'10', b'10'), (b'11', b'11'), (b'12', b'12 - Largest')], label=b'Display Size')), (b'pages', wagtail.core.blocks.ListBlock(wagtail.core.blocks.PageChooserBlock(target_model=['cartoview_cms.GenericPage']), label=b'Items'))]))], blank=True)),
                 ('app_instance', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='app_manager.AppInstance')),
             ],
             options={
