@@ -1,3 +1,2 @@
-wagtail==2.11.2
+coderedcms==0.20.0
 wagtailmenus==3.0.2
-wagtailfontawesome==1.2.1
