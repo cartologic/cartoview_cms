@@ -7,7 +7,7 @@ from wagtail.core.models import Page
 
 
 class GenericModule(Page):
-    parent_page_types = ['wagtailcore.Page', 'cartoview_cms.MenuItem']
+    parent_page_types = ['wagtailcore.Page']
     subpage_types = ['cartoview_cms.GenericPage']
     show_in_menus_default = True
 

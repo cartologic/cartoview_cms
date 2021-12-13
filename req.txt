@@ -1,2 +1,1 @@
 coderedcms==0.20.0
-wagtailmenus==3.0.2

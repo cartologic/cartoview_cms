@@ -12,8 +12,7 @@ from ..streamfields.Blocks import *
 
 
 class GenericPage(Page):
-    parent_page_types = ['wagtailcore.Page', 'cartoview_cms.GenericModule', 'cartoview_cms.GenericPage',
-                         'cartoview_cms.MenuItem']
+    parent_page_types = ['wagtailcore.Page', 'cartoview_cms.GenericModule', 'cartoview_cms.GenericPage']
     subpage_types = ['cartoview_cms.GenericPage']
     show_in_menus_default = False
 

@@ -9,7 +9,6 @@ INSTALLED_APPS += (
     'coderedcms',
     'bootstrap4',
     'modelcluster',
-    'wagtailmenus',
     'wagtailfontawesome',
     'wagtailcache',
     'wagtailimportexport',
@@ -30,10 +29,6 @@ INSTALLED_APPS += (
     'wagtail.contrib.table_block',
     'wagtail.admin',
 )
-
-CARTOVIEW_CMS_CONTEXT_PROCESSORS = ('wagtailmenus.context_processors.wagtailmenus',)
-
-TEMPLATES[0]["OPTIONS"]['context_processors'] += CARTOVIEW_CMS_CONTEXT_PROCESSORS
 
 # SITE_NAME declared at cartoview.settings.py
 WAGTAIL_SITE_NAME = "CMS"
