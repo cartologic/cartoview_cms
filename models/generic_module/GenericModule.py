@@ -62,6 +62,7 @@ class GenericModule(CoderedWebPage):
             resources = paginator.page(
                 paginator.num_pages)  # If page is out of range (e.g. 9999), deliver last page of results.
         context['resources'] = resources
+        context['num_pages'] = paginator.num_pages
         return context
 
     body_content_panels = CoderedWebPage.body_content_panels + [
