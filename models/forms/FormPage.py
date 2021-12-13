@@ -1,34 +1,42 @@
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel,
-    InlinePanel, MultiFieldPanel
-)
+from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import RichTextField
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+from coderedcms.forms import CoderedFormField
+from coderedcms.models import CoderedFormPage, CoderedEmail
 
 
-class FormField(AbstractFormField):
+class FormField(CoderedFormField):
+    """
+    A field that links to a FormPage.
+    """
+
+    class Meta:
+        ordering = ['sort_order']
+
     page = ParentalKey('FormPage', related_name='form_fields')
 
 
-class FormPage(AbstractEmailForm):
+class FormPage(CoderedFormPage):
+    """
+    A page with a html <form>.
+    """
     show_in_menus_default = True
     template = 'cartoview_cms/forms/form_page.html'
+    landing_page_template = 'cartoview_cms/forms/form_page_landing.html'
     intro = RichTextField(blank=True)
     thank_you_text = RichTextField(blank=True)
 
-    content_panels = AbstractEmailForm.content_panels + [
+    body_content_panels = CoderedFormPage.body_content_panels + [
         FieldPanel('intro', classname="full"),
-        InlinePanel('form_fields', label="Form fields"),
         FieldPanel('thank_you_text', classname="full"),
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('from_address', classname="col6"),
-                FieldPanel('to_address', classname="col6"),
-            ]),
-            FieldPanel('subject'),
-        ], "Email"),
     ]
 
     class Meta:
         verbose_name = "Form with Email"
+
+
+class FormConfirmEmail(CoderedEmail):
+    """
+    Sends a confirmation email after submitting a FormPage.
+    """
+    page = ParentalKey('FormPage', related_name='confirmation_emails')
