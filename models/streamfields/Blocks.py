@@ -7,6 +7,35 @@ from wagtail.images.blocks import ImageChooserBlock
 from geonode.maps.models import Map
 
 
+class FeaturedMapChooser(blocks.ChooserBlock):
+    target_model = Map
+    widget = forms.Select
+
+    class Meta:
+        icon = "icon"
+
+    def value_for_form(self, value):
+        if isinstance(value, self.target_model):
+            return value.pk
+        else:
+            return value
+
+
+class MapCatalogBlock(blocks.StructBlock):
+    title = blocks.CharBlock(
+        label='Title',
+        max_length=240,
+    )
+    featured_maps = blocks.ListBlock(
+        FeaturedMapChooser(),
+        label='Featured Maps',
+    )
+
+    class Meta:
+        template = 'cartoview_cms/streamfields/map_catalog.html'
+        icon = "fa-map"
+
+
 class MapChooserBlock(blocks.ChooserBlock):
     target_model = Map
     widget = forms.Select

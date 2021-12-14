@@ -60,6 +60,7 @@ class GenericPage(CoderedPage):
         ('image_text_overlay', ImageTextOverlayBlock()),
         ('image_gallery', ImageGalleryBlock()),
         ('map', MapBlock()),
+        ('map_catalog', MapCatalogBlock()),
         ('separator', SeparatorBlock()),
         ('related_users', RelatedUsersBlock()),
         ('related_module', RelatedPages())

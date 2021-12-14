@@ -1,0 +1,94 @@
+{% load i18n %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static from staticfiles %}
+
+<link href="{% static 'cartoview_cms/streamfields/map_catalog/map_catalog.css' %}" rel="stylesheet"/>
+
+<div class="container all-page">
+    <div class="row">
+        <div class="col-md-12 ml-auto">
+            <div class="main-title">
+                <h1>{{ self.title }}</h1>
+            </div>
+        </div>
+    </div>
+
+    {% for featured_map in self.featured_maps %}
+        {% if not forloop.counter|divisibleby:2 %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="map-catalog-image">
+                        <a
+                            target="_blank"
+                            href="{% url 'map_view' mapid=featured_map.id %}"
+                            title="Go to {{ featured_map.title }} map"
+                        >
+                            {% if featured_map.thumbnail_url %}
+                                <img src="{{ featured_map.thumbnail_url }}" alt="Map">
+                            {% endif %}
+                        </a>
+                        <a
+                            href="{{ featured_map.featured_image_copyrights_link }}"
+                            target="_blank"
+                        >
+                            {{ featured_map.featured_image_copyrights_text }}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-5 col-md-offset-1 map-title">
+                    <h3 class="no-top-margin">
+                        <a
+                            target="_blank"
+                            href="{% url 'map_view' mapid=featured_map.id %}"
+                            title="Go to {{ featured_map.title }} map"
+                        >
+                            {{ featured_map.title }}
+                        </a>
+                    </h3>
+                    <p>
+                        {% autoescape off %}
+                            {{ featured_map.abstract }}
+                        {% endautoescape %}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-md-6 col-md-offset-1">
+                    <h3 class="title no-top-margin">
+                        <a
+                            target="_blank"
+                            href="{% url 'map_view' mapid=featured_map.id %}"
+                            title="Go to {{ featured_map.title }} map"
+                        >
+                            {{ featured_map.title }}
+                        </a>
+                    </h3>
+                    <p>
+                        {{ featured_map.description }}
+                    </p>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                    <div class="map-catalog-image">
+                        <a
+                            target="_blank"
+                            href="{% url 'map_view' mapid=featured_map.id %}"
+                            title="Go to {{ featured_map.title }} map"
+                        >
+                            {% if featured_map.thumbnail_url %}
+                                <img src="{{ featured_map.thumbnail_url }}" alt="Map">
+                            {% endif %}
+                        </a>
+                        <a
+                            href="{{ featured_map.featured_image_copyrights_link }}"
+                            target="_blank"
+                        >
+                            {{ featured_map.featured_image_copyrights_text }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <hr/>
+    {% endfor %}
+</div>
