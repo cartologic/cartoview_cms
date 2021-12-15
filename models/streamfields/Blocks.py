@@ -203,3 +203,27 @@ class RelatedPages(blocks.StructBlock):
     class Meta:
         template = 'cartoview_cms/streamfields/related_module.html'
         icon = 'fa-window-restore'
+
+
+class ImageLink(blocks.StructBlock):
+    image = ImageChooserBlock(
+        label='Image',
+    )
+    link = blocks.CharBlock(
+        label='Link',
+        max_length=200,
+    )
+
+
+class ImageLinkGalleryBlock(blocks.StructBlock):
+    image_items = blocks.ListBlock(
+        ImageLink(),
+        label="Image",
+    )
+    single_image_width = blocks.IntegerBlock(
+        help_text="in pixels",
+    )
+
+    class Meta:
+        template = 'cartoview_cms/streamfields/image_link_gallery.html'
+        icon = 'fa-cubes'

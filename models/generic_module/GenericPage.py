@@ -59,6 +59,7 @@ class GenericPage(CoderedPage):
         ('accordions', AccordionBlock()),
         ('image_text_overlay', ImageTextOverlayBlock()),
         ('image_gallery', ImageGalleryBlock()),
+        ('image_link_gallery', ImageLinkGalleryBlock()),
         ('map', MapBlock()),
         ('map_catalog', MapCatalogBlock()),
         ('separator', SeparatorBlock()),
