@@ -1,6 +1,11 @@
 .all-page {
     color: #3C4858;
 }
+
+.row {
+    display: flex;
+}
+
 .main-title h1 {
     text-align: center;
     margin: 25px 0;

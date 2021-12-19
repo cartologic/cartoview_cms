@@ -48,8 +48,8 @@
             </div>
         {% else %}
             <div class="row">
-                <div class="col-md-6 col-md-offset-1">
-                    <h3 class="title no-top-margin">
+                <div class="col-md-6 col-md-offset-1 map-title">
+                    <h3 class="no-top-margin">
                         <a
                             target="_blank"
                             href="{% url 'map_view' mapid=featured_map.id %}"
@@ -59,7 +59,9 @@
                         </a>
                     </h3>
                     <p>
-                        {{ featured_map.description }}
+                        {% autoescape off %}
+                            {{ featured_map.abstract }}
+                        {% endautoescape %}
                     </p>
                 </div>
                 <div class="col-md-6 col-md-offset-1">
