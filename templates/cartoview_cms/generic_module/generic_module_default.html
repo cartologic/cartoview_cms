@@ -8,6 +8,7 @@
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
 {% block body_outer %}
+    <link rel="stylesheet" type="text/css" href="{% static 'coderedcms/css/codered-front.min.css' %}"/>
     <link href="{% static "cartoview_cms/css/generic_module/generic_module_default.css" %}?v={{ VERSION }}"
           rel="stylesheet"/>
 
