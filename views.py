@@ -2,6 +2,7 @@ import json
 import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 
 from cartoview.app_manager.models import AppInstance
@@ -14,7 +15,7 @@ class CMS(StandardAppViews):
 
     @method_decorator(login_required)
     def new(self, request, template=None, context={}, *args, **kwargs):
-        return redirect('/apps/cartoview_cms/admin/pages/2/add_subpage/')
+        return redirect(reverse('wagtailadmin_pages:add_subpage', args=(2, )))
 
     @staticmethod
     def view(request, instanceid):
