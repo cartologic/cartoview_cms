@@ -1,5 +1,6 @@
 {% extends "geonode_base.html" %}
 {% load static wagtailcore_tags widget_tweaks %}
+{% load coderedcms_tags bootstrap4 %}
 {% load i18n %}
 {% load base_tags %}
 {% load client_lib_tags %}
@@ -13,8 +14,20 @@
     </div>
 
     {{ page.intro|richtext }}
-    <form action="{% pageurl page %}" method="POST">
+    <form
+        id='{{ page.form_id }}'
+        action="{% pageurl self %}"
+        method="POST"
+        {% if form|is_file_form %}enctype="multipart/form-data"{% endif %}
+    >
         {% csrf_token %}
+
+        {% block captcha %}
+            {% if page.spam_protection %}
+                {% include 'coderedcms/includes/form_honeypot.html' %}
+            {% endif %}
+        {% endblock %}
+
         {% if form.non_field_errors %}
             <div class="alert alert-danger" role="alert">
                 {% for error in form.non_field_errors %}
@@ -30,7 +43,11 @@
             </div>
         {% endfor %}
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="{{ 'horizontal_field_class'|bootstrap_settings }}">
+            <button type="submit" class="btn {{ page.button_size }} {{ page.button_style }} {{ page.button_css_class }}">
+                {{ page.button_text }}
+            </button>
+        </div>
     </form>
 
 {% endblock %}

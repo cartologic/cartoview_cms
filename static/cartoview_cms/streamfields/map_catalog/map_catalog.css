@@ -1,0 +1,42 @@
+.all-page {
+    color: #3C4858;
+}
+
+.row {
+    display: flex;
+}
+
+.main-title h1 {
+    text-align: center;
+    margin: 25px 0;
+    font-weight: 300;
+}
+
+.map-catalog-image {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.map-catalog-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
+
+.map-title {
+    text-align: center;
+}
+
+.map-title a {
+    color: #3C4858;
+}
+
+.map-title a:hover, .map-title a:focus {
+    color: #626c79;
+    text-decoration: none;
+}

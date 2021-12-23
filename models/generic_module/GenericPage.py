@@ -4,32 +4,52 @@ from django.db import models
 from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, MultiFieldPanel, PageChooserPanel, \
     FieldRowPanel
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Page
+from wagtail.images import get_image_model_string
+from coderedcms.models import CoderedPage
 from wagtail.documents.blocks import DocumentChooserBlock
 
 from cartoview.app_manager.models import AppInstance, App
 from ..streamfields.Blocks import *
 
 
-class GenericPage(Page):
-    parent_page_types = ['wagtailcore.Page', 'cartoview_cms.GenericModule', 'cartoview_cms.GenericPage',
-                         'cartoview_cms.MenuItem']
+class GenericPage(CoderedPage):
+    """
+    Custom page for individual generic pages.
+    """
+    parent_page_types = ['cartoview_cms.GenericModule', 'cartoview_cms.GenericPage']
     subpage_types = ['cartoview_cms.GenericPage']
-    show_in_menus_default = False
 
-    selected_template = models.CharField(max_length=255, choices=(
-        ('cartoview_cms/generic_module/generic_page_default.html', 'Default Template'),
-    ), default='cartoview_cms/generic_module/generic_page_default.html')
+    selected_template = models.CharField(
+        max_length=255,
+        choices=(
+            ('cartoview_cms/generic_module/generic_page_default.html', 'Default Template'),
+        ),
+        default='cartoview_cms/generic_module/generic_page_default.html'
+    )
     abstract = models.CharField(max_length=500, blank=True, null=True)
     thumbnail = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.SET_NULL, blank=True, null=True
+        get_image_model_string(),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
     )
-    focused = models.BooleanField(default=False, verbose_name="Focused", help_text=mark_safe(
-        "You should select the <b>focused template</b> for the Generic Module!."))
-    related_page = models.ForeignKey('wagtailcore.Page', null=True, blank=True, related_name='+',
-                                     on_delete=models.SET_NULL)
-    is_redirect = models.BooleanField(default=False, verbose_name="Redirect External",
-                                      help_text=mark_safe("Redirct to an <b>External</b> link"))
+    focused = models.BooleanField(
+        default=False,
+        verbose_name="Focused",
+        help_text=mark_safe("You should select the <b>focused template</b> for the Generic Module!.")
+    )
+    related_page = models.ForeignKey(
+        CoderedPage,
+        null=True,
+        blank=True,
+        related_name='+',
+        on_delete=models.SET_NULL
+    )
+    is_redirect = models.BooleanField(
+        default=False,
+        verbose_name="Redirect External",
+        help_text=mark_safe("Redirct to an <b>External</b> link")
+    )
     redirect_link = models.CharField(max_length=500, blank=True, null=True)
     body = StreamField([
         ('header', HeaderBlock()),
@@ -39,7 +59,9 @@ class GenericPage(Page):
         ('accordions', AccordionBlock()),
         ('image_text_overlay', ImageTextOverlayBlock()),
         ('image_gallery', ImageGalleryBlock()),
+        ('image_link_gallery', ImageLinkGalleryBlock()),
         ('map', MapBlock()),
+        ('map_catalog', MapCatalogBlock()),
         ('separator', SeparatorBlock()),
         ('related_users', RelatedUsersBlock()),
         ('related_module', RelatedPages())
@@ -50,7 +72,7 @@ class GenericPage(Page):
     def template(self):
         return self.selected_template
 
-    content_panels = Page.content_panels + [
+    body_content_panels = CoderedPage.body_content_panels + [
         FieldPanel("abstract", classname="full"),
         MultiFieldPanel([
             FieldPanel('selected_template', widget=forms.Select),
@@ -101,3 +123,6 @@ class GenericPage(Page):
             app_instance.thumbnail_url = thumbnail_url
             app_instance.save()
         super(GenericPage, self).save()
+
+    class Meta:
+        verbose_name = "Generic Page"

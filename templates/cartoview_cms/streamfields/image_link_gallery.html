@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+
+<div class="row" style="padding-bottom: 5vh;">
+    {% for image_item in value.image_items %}
+        <a target="_blank" href="{{ image_item.link }}">
+            <img
+                style="width: {{ value.single_image_width }}px;margin-right: 5px;margin-bottom: 5px;"
+                class="rounded float-left"
+                src="{{ image_item.image.file.url }}"
+                alt="Image">
+        </a>
+    {% endfor %}
+</div>
