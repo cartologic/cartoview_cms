@@ -51,7 +51,9 @@ class GenericModule(CoderedWebPage):
     def get_context(self, request, *args, **kwargs):
         context = super(GenericModule, self).get_context(request)
         # Update context to include only published child resources, ordered by reverse-chron
-        resources = self.get_children().live().order_by('-first_published_at')
+        resources = sorted(
+            self.get_children().live().specific(), key=lambda p: getattr(p, 'date') or getattr(p, 'last_published_at'), reverse=True
+        )
         paginator = Paginator(resources, 6)  # Show 6 resources per page
         page = request.GET.get('page')
         try:
