@@ -1,0 +1,15 @@
+.parallax {
+    background-attachment: fixed;
+}
+
+.hero-fg .block-row {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 0 20px 20px 20px;
+}
+
+@media (min-width: 920px) {
+    .hero-fg p {
+        max-width: 800px;
+    }
+}
