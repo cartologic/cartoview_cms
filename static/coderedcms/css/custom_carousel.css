@@ -12,13 +12,13 @@
     top: 35%;
 }
 
-.block-text {
+.carousel-caption .block-text {
     background: rgba(37, 29, 58, 0.4);
     padding: 25px;
     border-radius: 10px;
 }
 
-.block-text p {
+.carousel-caption .block-text p {
     font-size: 20px;
 }
 
