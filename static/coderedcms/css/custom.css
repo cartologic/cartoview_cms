@@ -85,3 +85,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.generic-page-content .row {
+    margin: 20px -15px;
+}

@@ -13,7 +13,7 @@
 
 .title-bg {
     text-align: center;
-    padding: 0 50px;
+    padding: 25px 50px;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
 }
@@ -33,6 +33,24 @@
     .page-title {
         padding: 15px;
     }
+}
+
+.abstract {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.abstract img {
+    filter: invert(15%) sepia(96%) saturate(12%) hue-rotate(333deg) brightness(103%) contrast(96%);
+    width: 25px;
+    margin-right: 5px;
+}
+
+.abstract span {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 5px;
 }
 
 .intro .block-row {
@@ -139,4 +157,16 @@
     .card-item .card-body > a {
         width: 292px;
     }
+}
+
+.centered {
+    text-align: center;
+    font-size: 0;
+}
+
+.centered > div {
+    float: none;
+    display: inline-block;
+    text-align: left;
+    font-size: 13px;
 }
