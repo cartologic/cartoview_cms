@@ -1,4 +1,5 @@
 import json
+import datetime
 from wagtail.images.edit_handlers import ImageChooserPanel
 from django.db import models
 from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, MultiFieldPanel, PageChooserPanel, \
@@ -7,7 +8,7 @@ from wagtail.core.fields import StreamField
 from wagtail.images import get_image_model_string
 from coderedcms.models import CoderedPage
 from wagtail.documents.blocks import DocumentChooserBlock
-
+from wagtail.admin.widgets import AdminDateInput
 from cartoview.app_manager.models import AppInstance, App
 from ..streamfields.Blocks import *
 
@@ -27,6 +28,7 @@ class GenericPage(CoderedPage):
         default='cartoview_cms/generic_module/generic_page_default.html'
     )
     abstract = models.CharField(max_length=500, blank=True, null=True)
+    date = models.DateField(default=datetime.date.today, blank=True, null=True)
     thumbnail = models.ForeignKey(
         get_image_model_string(),
         on_delete=models.SET_NULL,
@@ -76,6 +78,7 @@ class GenericPage(CoderedPage):
         FieldPanel("abstract", classname="full"),
         MultiFieldPanel([
             FieldPanel('selected_template', widget=forms.Select),
+            FieldPanel('date', widget=AdminDateInput()),
             ImageChooserPanel('thumbnail'),
             FieldPanel('focused', widget=forms.CheckboxInput),
             PageChooserPanel('related_page'),
