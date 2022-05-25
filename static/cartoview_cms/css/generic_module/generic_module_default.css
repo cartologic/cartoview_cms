@@ -92,7 +92,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 158, 219, 0.83);
+    background-color: rgba(54, 48, 98, 0.83);
     color: #ffffff;
     transition: all 0.5s ease-in-out 0s;
     display: none;
@@ -108,7 +108,7 @@
 }
 
 .card-item .card-body > a {
-    color: #000000;
+    color: #363062;
     font-weight: 500;
     font-size: 20px;
     padding: 16px;
@@ -126,20 +126,21 @@
 }
 
 .card-item .card-body > a:hover {
-    color: rgba(0, 0, 0, .6);
+    color: rgba(54, 48, 98, .6);
     text-decoration: none;
 }
 
 .card-item .card-body .date {
     padding: 10px 15px;
     text-align: left;
-    border-top: 1px solid #000000;
+    border-top: 1px solid #363062;
+    color: #363062;
     margin: 0;
     font-size: 16px;
 }
 
 .card-item .card-body .date i {
-    color: #000000;
+    color: #363062;
     padding: 0 5px;
 }
 
@@ -174,7 +175,7 @@
 .intro .card {
     box-sizing: border-box;
     border-radius: 4px;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1rem 2rem rgba(54, 48, 98, 0.25);
     font-size: 2rem;
     text-transform: capitalize;
     text-align: center;
@@ -191,7 +192,7 @@
 }
 
 .intro .card-body h5 {
-    color: #000000;
+    color: #363062;
     font-weight: 500;
     font-size: 20px;
     padding: 16px;
