@@ -2,8 +2,10 @@ from django import forms
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import models
 from django.utils.safestring import mark_safe
+from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from coderedcms.models import CoderedWebPage
+from ..streamfields import CUSTOM_LAYOUT_STREAMBLOCKS
 
 
 class GenericModule(CoderedWebPage):
@@ -43,6 +45,7 @@ class GenericModule(CoderedWebPage):
         null=True,
         help_text=mark_safe("You should check the previous field for this to work!")
     )
+    body = StreamField(CUSTOM_LAYOUT_STREAMBLOCKS, null=True, blank=True)
 
     @property
     def template(self):

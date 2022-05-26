@@ -6,14 +6,14 @@ from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, MultiField
     FieldRowPanel
 from wagtail.core.fields import StreamField
 from wagtail.images import get_image_model_string
-from coderedcms.models import CoderedPage
-from wagtail.documents.blocks import DocumentChooserBlock
+from coderedcms.models import CoderedPage, CoderedWebPage
 from wagtail.admin.widgets import AdminDateInput
 from cartoview.app_manager.models import AppInstance, App
+from ..streamfields import CUSTOM_LAYOUT_STREAMBLOCKS
 from ..streamfields.Blocks import *
 
 
-class GenericPage(CoderedPage):
+class GenericPage(CoderedWebPage):
     """
     Custom page for individual generic pages.
     """
@@ -53,28 +53,14 @@ class GenericPage(CoderedPage):
         help_text=mark_safe("Redirct to an <b>External</b> link")
     )
     redirect_link = models.CharField(max_length=500, blank=True, null=True)
-    body = StreamField([
-        ('header', HeaderBlock()),
-        ('paragraph', blocks.RichTextBlock(classname="full")),
-        ('document', DocumentChooserBlock()),
-        ('list', UnorderedListBlock()),
-        ('accordions', AccordionBlock()),
-        ('image_text_overlay', ImageTextOverlayBlock()),
-        ('image_gallery', ImageGalleryBlock()),
-        ('image_link_gallery', ImageLinkGalleryBlock()),
-        ('map', MapBlock()),
-        ('map_catalog', MapCatalogBlock()),
-        ('separator', SeparatorBlock()),
-        ('related_users', RelatedUsersBlock()),
-        ('related_module', RelatedPages())
-    ], blank=True)
+    body = StreamField(CUSTOM_LAYOUT_STREAMBLOCKS, null=True, blank=True)
     app_instance = models.OneToOneField(AppInstance, on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
     def template(self):
         return self.selected_template
 
-    body_content_panels = CoderedPage.body_content_panels + [
+    body_content_panels = CoderedWebPage.body_content_panels + [
         FieldPanel("abstract", classname="full"),
         MultiFieldPanel([
             FieldPanel('selected_template', widget=forms.Select),
@@ -87,7 +73,6 @@ class GenericPage(CoderedPage):
                 FieldPanel('redirect_link', classname="col8"),
             ]),
         ], heading="Display Information"),
-        StreamFieldPanel("body", classname="Full"),
     ]
 
     def save(self, *args, **kwargs):
