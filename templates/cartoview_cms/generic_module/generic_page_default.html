@@ -44,13 +44,9 @@
             </div>
         {% endif %}
     </div>
-    <div class="container-fluid generic-page-content" style="width: 90%">
+    <div class="generic-page-content">
         {% for block in page.body %}
-            <div class="row {% if forloop.counter == 1 %}centered{% endif %}">
-                <div class="{% if forloop.counter == 1 %}col-md-6{% else %}col-md-12{% endif %}">
-                    {% include_block block with block_id=block.id %}
-                </div>
-            </div>
+            {% include_block block with block_id=block.id %}
         {% endfor %}
     </div>
 {% endblock middle %}
