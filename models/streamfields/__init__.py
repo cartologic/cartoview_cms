@@ -55,10 +55,10 @@ CUSTOM_HTML_STREAMBLOCKS = [
     ('page_preview', PagePreviewBlock()),
 ]
 
+# TODO: Include CodeRed ImageGalleryBlock here when GeoNode upgrades to bootstrap 4.
 CUSTOM_CONTENT_STREAMBLOCKS = CUSTOM_HTML_STREAMBLOCKS + [
     ('card', CardBlock()),
     ('carousel', CarouselBlock()),
-    ('image_gallery', ImageGalleryBlock()),
     ('modal', ModalBlock(CUSTOM_HTML_STREAMBLOCKS)),
     ('map', MapBlock()),
     ('map_catalog', MapCatalogBlock()),
