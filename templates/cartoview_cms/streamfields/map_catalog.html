@@ -16,7 +16,7 @@
     {% for featured_map in self.featured_maps %}
         {% if not forloop.counter|divisibleby:2 %}
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-12 text-center">
                     <div class="map-catalog-image">
                         <a
                             target="_blank"
@@ -29,7 +29,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-md-5 col-md-offset-1 map-title">
+                <div class="col-md-6 col-sm-12 map-title">
                     <h3 class="no-top-margin">
                         <a
                             target="_blank"
@@ -48,7 +48,7 @@
             </div>
         {% else %}
             <div class="row">
-                <div class="col-md-6 col-md-offset-1 map-title">
+                <div class="col-md-6 col-sm-12 map-title">
                     <h3 class="no-top-margin">
                         <a
                             target="_blank"
@@ -64,7 +64,7 @@
                         {% endautoescape %}
                     </p>
                 </div>
-                <div class="col-md-6 col-md-offset-1">
+                <div class="col-md-6 col-sm-12 text-center">
                     <div class="map-catalog-image">
                         <a
                             target="_blank"

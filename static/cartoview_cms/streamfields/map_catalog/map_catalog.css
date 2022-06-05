@@ -2,10 +2,6 @@
     color: #3C4858;
 }
 
-.row {
-    display: flex;
-}
-
 .main-title h1 {
     text-align: center;
     margin: 25px 0;
@@ -19,9 +15,15 @@
 }
 
 .map-catalog-image img {
-    width: 100%;
+    width: 500px;
     height: auto;
     border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .map-catalog-image img {
+        width: 100%;
+    }
 }
 
 .no-top-margin {
