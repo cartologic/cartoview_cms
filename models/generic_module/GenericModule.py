@@ -2,8 +2,10 @@ from django import forms
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import models
 from django.utils.safestring import mark_safe
+from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
 from coderedcms.models import CoderedWebPage
+from ..streamfields import CUSTOM_LAYOUT_STREAMBLOCKS
 
 
 class GenericModule(CoderedWebPage):
@@ -43,6 +45,7 @@ class GenericModule(CoderedWebPage):
         null=True,
         help_text=mark_safe("You should check the previous field for this to work!")
     )
+    body = StreamField(CUSTOM_LAYOUT_STREAMBLOCKS, null=True, blank=True)
 
     @property
     def template(self):
@@ -51,7 +54,9 @@ class GenericModule(CoderedWebPage):
     def get_context(self, request, *args, **kwargs):
         context = super(GenericModule, self).get_context(request)
         # Update context to include only published child resources, ordered by reverse-chron
-        resources = self.get_children().live().order_by('-first_published_at')
+        resources = sorted(
+            self.get_children().live().specific(), key=lambda p: getattr(p, 'date') or getattr(p, 'last_published_at'), reverse=True
+        )
         paginator = Paginator(resources, 6)  # Show 6 resources per page
         page = request.GET.get('page')
         try:

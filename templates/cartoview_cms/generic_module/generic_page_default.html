@@ -1,6 +1,6 @@
 {% extends "geonode_base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load static from staticfiles %}
+{% load static %}
 {% load i18n %}
 {% load base_tags %}
 {% load client_lib_tags %}
@@ -8,15 +8,45 @@
 
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
-{% block body_outer %}
+{% block middle %}
+    <link href="{% static 'coderedcms/css/codered-front.min.css' %}" rel="stylesheet"/>
+    <link href="{% static "cartoview_cms/css/bootstrap4.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+    <link href="{% static "coderedcms/css/custom.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+    <link href="{% static "cartoview_cms/css/global_generic.css" %}?v={{ VERSION }}" rel="stylesheet"/>
 
-    <div class="page-header">
-        <h2>{{ page.title }}</h2>
+    <div class="container generic-wrapper">
+        {% include "_status_message.html" %}
+        {% include "_announcements.html" %}
+        {% include "_messages.html" %}
+        {% if self.cover_image %}
+            {% image page.cover_image fill-2000x1000 as cover_image %}
+            <div class="hero-bg" style="background-image:url({{ cover_image.url }});">
+                <div class="title-bg">
+                    <h1>{{ page.title }}</h1>
+                    {% if page.date %}
+                        <span>{{ page.date }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>{{ page.title }}</h2>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if page.abstract %}
+            <div class="abstract">
+                <img src="{% static 'images/article.svg' %}" alt="Article"/>
+                <span>{{ page.abstract }}</span>
+            </div>
+        {% endif %}
     </div>
-
-    {% for block in page.body %}
-        {% include_block block with block_id=block.id %}
-    {% endfor %}
-
-
-{% endblock %}
+    <div class="generic-page-content">
+        {% for block in page.body %}
+            {% include_block block with block_id=block.id %}
+        {% endfor %}
+    </div>
+{% endblock middle %}

@@ -1,95 +1,88 @@
 {% extends "geonode_base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load static from staticfiles %}
+{% load static %}
 {% load i18n %}
 {% load base_tags %}
 {% load client_lib_tags %}
 
 {% block title %} {{ page.title }} — {{ block.super }} {% endblock %}
 
-{% block body_outer %}
+{% block middle %}
+    <link href="{% static "cartoview_cms/css/bootstrap4.css" %}?v={{ VERSION }}" rel="stylesheet" />
+    <link href="{% static "coderedcms/css/custom.css" %}?v={{ VERSION }}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{% static 'coderedcms/css/codered-front.min.css' %}"/>
-    <link href="{% static "cartoview_cms/css/generic_module/generic_module_default.css" %}?v={{ VERSION }}"
-          rel="stylesheet"/>
-
-    {% if self.cover_image %}
-        {% image page.cover_image fill-2000x1000 as cover_image %}
-        <div class="hero-bg mb-5" style="background-image:url({{ cover_image.url }});">
-            <div class="hero-fg">
-                <div class="container">
+    <link href="{% static "cartoview_cms/css/global_generic.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+    <link href="{% static "cartoview_cms/css/generic_module/generic_module_default.css" %}?v={{ VERSION }}" rel="stylesheet"/>
+    <div class="container generic-wrapper">
+        {% include "_status_message.html" %}
+        {% include "_announcements.html" %}
+        {% include "_messages.html" %}
+        {% if self.cover_image %}
+            {% image page.cover_image fill-2000x1000 as cover_image %}
+            <div class="hero-bg" style="background-image:url({{ cover_image.url }});">
+                <div class="title-bg">
                     <h1>{{ page.title }}</h1>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="container my-5">
-            <h1>{{ page.title }}</h1>
-        </div>
-    {% endif %}
-
-    <div class="intro">
-        {% include_block page.body with settings=settings %}
+        {% else %}
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>{{ page.title }}</h2>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-
-    <section class="blog-me pt-100 pb-100" id="blog">
-        <div class="container">
-            <div class="row">
-                {% for resource in resources %}
-                    {% with resource=resource.specific %}
-                        <div class="col-lg-4 col-md-4">
-                            <!-- Single Item -->
-                            <div class="single-blog">
-                                <div class="blog-img">
-                                    {% with resource.thumbnail as thumbnail %}
-                                        {% if thumbnail %}{% image thumbnail fill-370x288 %}{% endif %}
-                                    {% endwith %}
-                                </div>
-                                <div class="blog-content">
-                                    <div class="blog-title">
-                                        <h4><a href="{% pageurl resource %}">{{ resource.title }}</a></h4>
-                                        <div class="meta">
-                                            <ul>
-                                                <li>{{ resource.first_published_at }}</li>
-                                            </ul>
-                                        </div>
+    <div class="container-fluid" style="width: 90%">
+        <div class="intro">
+            {% include_block page.body with settings=settings %}
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="cards-container">
+                    {% for resource in resources %}
+                        {% with resource=resource.specific %}
+                            <div class="card-item">
+                                <div class="card-body">
+                                    <div class="card-img">
+                                        {% if resource.thumbnail %}
+                                            {% image resource.thumbnail fill-370x288 %}
+                                        {% else %}
+                                            <img src="{% static 'img/no_image.png' %}" height="288" width="370" alt="No Image"/>
+                                        {% endif %}
+                                        <a href="{% pageurl resource %}" class="overlay">Read More</a>
                                     </div>
-                                    {% if resource.abstract %}
-                                        <p class="card-text">{{ resource.abstract|truncatewords:15 }}</p>
-                                    {% endif %}
-                                    <a href="{% pageurl resource %}" class="btn read-more">Read More</a>
+                                    <a href="{% pageurl resource %}">{{ resource.title }}</a>
+                                    <div class="date">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        <span>{{ resource.first_published_at|date:"d M Y" }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endwith %}
-                {% endfor %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </section>
-
-    {% if num_pages > 1 %}
-        <ul class="pagination">
-            {% if resources.has_previous %}
-                <li>
-                    <a href="?page={{ resources.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
-                </li>
-            {% endif %}
-            {% for page_num in resources.paginator.page_range %}
-                <li {% if page_num == resources.number %} class="active"{% endif %}>
-                    <a href="?page={{ page_num }}">{{ page_num }}</a>
-                </li>
-            {% endfor %}
-            {% if resources.has_next %}
-                <li>
-                    <a href="?page={{ resources.next_page_number }}"><i class="fa fa-angle-right"></i></a>
-                </li>
-            {% endif %}
-        </ul>
-    {% endif %}
-
-{% endblock %}
-
-
-
-
-
-
+        {% if num_pages > 1 %}
+            <ul class="pagination">
+                {% if resources.has_previous %}
+                    <li>
+                        <a href="?page={{ resources.previous_page_number }}"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                {% endif %}
+                {% for page_num in resources.paginator.page_range %}
+                    <li {% if page_num == resources.number %} class="active"{% endif %}>
+                        <a href="?page={{ page_num }}">{{ page_num }}</a>
+                    </li>
+                {% endfor %}
+                {% if resources.has_next %}
+                    <li>
+                        <a href="?page={{ resources.next_page_number }}"><i class="fa fa-angle-right"></i></a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock middle %}

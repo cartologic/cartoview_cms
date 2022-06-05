@@ -12,6 +12,7 @@ INSTALLED_APPS += (
     'wagtailfontawesome',
     'wagtailcache',
     'wagtailimportexport',
+    'wagtailseo',
 
     # Wagtail
     'wagtail.contrib.forms',
@@ -44,3 +45,7 @@ BOOTSTRAP4 = {
 
 # Tags
 TAGGIT_CASE_INSENSITIVE = True
+
+WAGTAIL_COMMENTS_RELATION_NAME = 'wagtail_comments'
+
+SESSION_COOKIE_NAME = WAGTAIL_SITE_NAME + "_sessionid"
